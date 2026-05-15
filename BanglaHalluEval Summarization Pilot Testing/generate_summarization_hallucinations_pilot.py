@@ -29,8 +29,8 @@ def write_rows(csv_path: Path, rows: list[dict], fieldnames: list[str]) -> None:
 
 
 def build_prompt(template: str, document: str, right_summary: str) -> str:
-    return template.replace("<Here is the test question>", document).replace(
-        "<Here is the right summary of the test question>", right_summary
+    return template.replace("<Here is the test document>", document).replace(
+        "<Here is the right summary of the test document>", right_summary
     )
 
 
@@ -81,96 +81,71 @@ def main() -> None:
     model = os.getenv("OPENAI_MODEL", "gpt-5.4")
 
     prompt_1 = (
-    "I want you to act as a Hallucinated Summary (HS) generator. The answer should be given in BANGLA. "
-    "Given a Question (Q) and the Right Summary (RS), your objective is to write a Hallucinated Summary (HS) "
-    "that sounds plausible but is factually incorrect.\n\n"
-    "You MUST use the following hallucination method:\n"
-    "The summary introduces information that is either too specific "
-    "(adds details, numbers, names, or conclusions not present in the source) or too vague "
-    "(omits critical specifics that the source clearly states). The hallucination must arise "
-    "from within the source context but distort or over-extend it.\n\n"
-    "Example —\n"
-    "#Question (Q)#: \"আমার বাবার বয়স ৬০ বছর। গত তিন মাস ধরে তার হাঁটুতে ব্যথা হচ্ছে। "
-    "সিঁড়ি দিয়ে উঠতে গেলে বা বেশিক্ষণ হাঁটলে ব্যথা বেড়ে যায়। বিশ্রাম নিলে কিছুটা কমে। "
-    "এক্স-রে করা হয়েছে, ডাক্তার বলেছেন হাড়ের ক্ষয় হয়েছে। কোনো ওষুধ এখনো শুরু হয়নি। "
-    "কি করলে ভালো হবে?\"\n\n"
-    "#Right Summary (RS)#: \"বয়স ৬০। তিন মাস ধরে হাঁটুতে ব্যথা, সিঁড়িতে বাড়ে, বিশ্রামে কমে। "
-    "এক্স-রেতে হাড়ের ক্ষয় ধরা পড়েছে। চিকিৎসা শুরু হয়নি। করণীয় কী?\"\n\n"
-    "#Hallucinated Summary (HS)#: \"বয়স ৬০। ছয় মাস ধরে দুই হাঁটুতে ব্যথা, হাঁটলে ও রাতে বাড়ে। "
-    "এমআরআই-তে তরুণাস্থির ক্ষয় ধরা পড়েছে। চিকিৎসা শুরু হয়নি। করণীয় কী?\"\n\n"
-    "Note: The HS changed 'তিন মাস' to 'ছয় মাস', added 'দুই হাঁটু' and 'রাতে বাড়ে' (not in source), "
-    "and replaced 'এক্স-রে / হাড়ের ক্ষয়' with 'এমআরআই / তরুণাস্থির ক্ষয়' — all intrinsic distortions.\n\n"
-    "Rules:\n"
-    "- #Hallucinated Summary (HS)# length must be approximately equal to #Right Summary (RS)# length.\n"
-    "- Do NOT add completely external facts; distort or over-infer from what is already in the source.\n"
-    "- The hallucinated summary must still sound natural and plausible in Bangla.\n\n"
-    "#Question (Q)#: <Here is the test question>\n"
-    "#Right Summary (RS)#: <Here is the right summary of the test question>\n"
-    "#Hallucinated Summary (HS)#: Generate"
-)
+        "I want you act as a hallucination summary generator. The answer should be given in BANGLA. Given a "
+        "document and the right summary, your objective is to write a hallucinated summary that sounds plausible "
+        "but is factually incorrect. You SHOULD write the hallucinated summary using the following method: "
+        "You are trying to write a summary which is factual but some information "
+        "cannot be directly inferred or entailed from the document.\n"
+        "Example -\n"
+        "#Question#: \"আমার স্ত্রীর বয়স ২২ বছর সে অন্তঃসত্ত্বা । প্রথমবার ডাক্তার গত 7 নভেম্বর 2022 তার প্রসাবের "
+        "ডেট ছিল । কিন্তু গত সপ্তাহে ডাক্তার দেখালে ১৪ তারিখে ডেট দেয় । এখন কি করব আবার কি নতুন করে ডাক্তার "
+        "দেখাবো নাকি ১৪ তারিখ পর্যন্ত অপেক্ষা করব\"\n"
+        "#Right Summary#: \"স্ত্রীর বয়স ২২ । ৭ তারিখ প্রসাবের ডেট ছিল , কিন্তু ডাক্তার ১৪ তারিখে ডেট দেয় । কি "
+        "করব\"\n"
+        "#Hallucinated Summary#: \"মুখ্য সবিতার বয়স ২২ বছর, অন্তঃসত্ত্বা আছে। ডাক্তারের প্রথম দিক্ট ১১ জুলাই, "
+        "গত সপ্তাহে নতুন ডিক্ট ১৪ তারিখে দেয়া হয়। এখন কি নতুন করে ডাক্তার দেখাব অথবা ১৪ পর্যন্ত অপেক্ষা করব?\"\n"
+        "You should try your best to make the summary become hallucinated. #Hallucinated Summary# can only have "
+        "about 5 more words than #Right Summary#.\n"
+        "#Document#: <Here is the test document>\n"
+        "#Right Summary#: <Here is the right summary of the test document>\n"
+        "#Hallucinated Summary#: Generate"
+    )
 
     prompt_2 = (
-    "I want you to act as a Hallucinated Summary (HS) generator. The answer should be given in BANGLA. "
-    "Given a Question (Q) and the Right Summary (RS), your objective is to write a Hallucinated Summary (HS) "
-    "that sounds plausible but is factually incorrect.\n\n"
-    "You MUST use the following hallucination method:\n"
-    "The summary states at least one concrete fact (a specific name, number, "
-    "date, medicine name, place, or institution) that is entirely made up and does not appear anywhere "
-    "in the source question.\n\n"
-    "Example —\n"
-    "#Question (Q)#: \"আমার মেয়ের বয়স ৮ বছর। গত কয়েকদিন ধরে তার জ্বর আসছে, সাথে গলা ব্যথাও আছে। "
-    "জ্বর সর্বোচ্চ ১০২ ডিগ্রি পর্যন্ত উঠছে। প্যারাসিটামল দিচ্ছি, একটু কমে কিন্তু আবার আসে। "
-    "খাওয়া-দাওয়া একদম কমে গেছে। কি করব?\"\n\n"
-    "#Right Summary (RS)#: \"বয়স ৮। কয়েকদিন ধরে জ্বর ও গলা ব্যথা। জ্বর সর্বোচ্চ ১০২ ডিগ্রি। "
-    "প্যারাসিটামল দেওয়া হচ্ছে। খাওয়া কমেছে। করণীয় কী?\"\n\n"
-    "#Hallucinated Summary (HS)#: \"বয়স ৮। তিন সপ্তাহ ধরে জ্বর ও গলা ব্যথা। জ্বর সর্বোচ্চ ১০৪ ডিগ্রি। "
-    "নাপা সিরাপ ও অ্যামোক্সিসিলিন দেওয়া হচ্ছে। খাওয়া কমেছে। করণীয় কী?\"\n\n"
-    "Note: The Hallucinated Summary invented 'তিন সপ্তাহ' (source says 'কয়েকদিন'), changed '১০২' to '১০৪', "
-    "and added 'অ্যামোক্সিসিলিন' — a drug name that does not appear anywhere in the source.\n\n"
-    "Rules:\n"
-    "- #Hallucinated Summary (HS)# length must be approximately equal to #Right Summary (RS)# length.\n"
-    "- Do NOT add completely external facts; distort or over-infer from what is already in the source.\n"
-    "- The hallucinated summary must still sound natural and plausible in Bangla.\n"
-    "- At least one fabricated concrete fact (number, medicine, place, name, date) must be present.\n\n"
-    "#Question (Q)#: <Here is the test question>\n"
-    "#Right Summary (RS)#: <Here is the right summary of the test question>\n"
-    "#Hallucinated Summary (HS)#: Generate"
-)
+        "I want you act as a hallucination summary generator. The answer should be given in BANGLA. Given a "
+        "document and the right summary, your objective is to write a hallucinated summary that sounds plausible "
+        "but is factually incorrect. You SHOULD write the hallucinated summary using the following method: "
+        "You are trying to write a summary but there exist some non-factual and "
+        "incorrect information. You can fabricate some information that does not exist in the provided document.\n"
+        "Example -\n"
+        "#Question#: আসসালামু আলাইকুম স্যার । আমার মেয়ের বয়স ৫ বছর । আলহামদুলিল্লাহ অসুখ বিসুখ খুবই কম । "
+        "মোটামোটি পরিষ্কার পরিচ্ছন্ন থাকে সবসময় । কিন্তু ছোট বেলা থেকেই সর্দি সমস্যা । এখনও অনবরত পানির মত আবার "
+        "কখনও পাকা সর্দি নাক দিয়ে ঝরতে থাকে যা বাচ্চার জন্য এমনকি আমাদের জন্যও খুবি অসস্থিকর । কি ব্যবহার করলে "
+        "এ অবস্থা থেকে মুক্তি পাবে , অন্ততঃ সর্দি কমে যাবে জানালে উপকৃত হব । \"\n"
+        "#Right Summary#: \"বয়স ৫ । ছোট থেকে পাকা সর্দি পানির মতো নাক থেকে ঝরতে থাকে । কি করণীয় ?\"\n"
+        "#Hallucinated Summary#: \"আলহামদুলিল্লাহ আপনার ছেলে স্বাস্থ্যকর্ম ভাল, কিন্তু ধর্মটি এবং ঝাড়াগাড়ি দেয়। "
+        "আপনি চান যেন সর্দি হ্রাস পায়, তাই মুশকিল কমানোর উপায় খুজছেন।\"\n"
+        "You should try your best to make the summary become hallucinated. #Hallucinated Summary# can only have "
+        "about 5 more words than #Right Summary#.\n"
+        "#Document#: <Here is the test document>\n"
+        "#Right Summary#: <Here is the right summary of the test document>\n"
+        "#Hallucinated Summary#: Generate"
+    )
 
     prompt_3 = (
-    "I want you to act as a Hallucinated Summary (HS) generator. The answer should be given in BANGLA. "
-    "Given a Question (Q) and the Right Summary (RS), your objective is to write a Hallucinated Summary (HS) "
-    "that sounds plausible but is factually incorrect.\n\n"
-    "You MUST use the following hallucination method:\n"
-    "The summary directly contradicts at least one fact that is explicitly "
-    "stated in the source question. This includes reversing a stated condition, changing a clear "
-    "symptom to its opposite, or contradicting a specific detail the source makes unambiguous.\n\n"
-    "Example —\n"
-    "#Question (Q)#: \"আমার স্বামীর বয়স ৪৫ বছর। প্রায় দুই সপ্তাহ ধরে রাতে ঘুম হচ্ছে না। দিনের বেলায় "
-    "ঘুম পায়, কিন্তু রাতে শুলেই মাথায় নানা চিন্তা আসে। কোনো ওষুধ খাচ্ছেন না। আগে এরকম হয়নি। "
-    "কি করলে ঘুম ঠিক হবে?\"\n\n"
-    "#Right Summary (RS)#: \"বয়স ৪৫। দুই সপ্তাহ ধরে রাতে ঘুম হচ্ছে না। দিনে ঘুম পায়। "
-    "কোনো ওষুধ নেই। ঘুমের সমস্যার সমাধান জানতে চান।\"\n\n"
-    "#Hallucinated Summary (HS)#: \"বয়স ৪৫। দুই সপ্তাহ ধরে দিনে ঘুম হচ্ছে না, রাতে অতিরিক্ত ঘুম পায়। "
-    "ঘুমের ওষুধ সেবন করছেন। ঘুমের সমস্যার সমাধান জানতে চান।\"\n\n"
-    "Note: The Hallucinated Summary reversed the sleep pattern ('রাতে ঘুম নেই' became 'রাতে অতিরিক্ত ঘুম'), "
-    "and contradicted 'কোনো ওষুধ নেই' by stating 'ঘুমের ওষুধ সেবন করছেন' — both direct contradictions "
-    "of explicitly stated facts in the source.\n\n"
-    "Rules:\n"
-    "- #Hallucinated Summary (HS)# length must be approximately equal to #Right Summary (RS)# length.\n"
-    "- Do NOT add completely external facts; distort or over-infer from what is already in the source.\n"
-    "- The hallucinated summary must still sound natural and plausible in Bangla.\n"
-    "- At least one statement must directly contradict an explicit fact from the source question.\n"
-    "- The contradiction should be subtle enough to still sound plausible in Bangla.\n\n"
-    "#Question (Q)#: <Here is the test question>\n"
-    "#Right Summary (RS)#: <Here is the right summary of the test question>\n"
-    "#Hallucinated Summary (HS)#: Generate"
-)
+        "I want you act as a hallucination summary generator. The answer should be given in BANGLA. Given a "
+        "document and the right summary, your objective is to write a hallucinated summary that sounds plausible "
+        "but is factually incorrect. You SHOULD write the hallucinated summary using the following method: "
+        "You are trying to write a summary but there is a factual contradiction "
+        "between the summary and the document.\n"
+        "Example -\n"
+        "#Question#: \"কিছুক্ষণ বসে থাকলে পা তে মনে হয় পানি জমেছে ( আসলে না ) , কেমন যেন আনইজি লাগে । এটা অনেক দিন "
+        "থেকে হচ্ছে । একটু হাটা চলা করলে ঠিক হয়ে যায় । কিন্তু কিছুক্ষণ পর আবার এমন হয় । আমার উচ্চতা অনুযায়ী ওজন "
+        "ঠিক আছে । করনীয় কি ? ধন্যবাদ ।\"\n"
+        "#Right Summary#: \"পায়ে পানি জমে ৷ হাটলে ঠিক হয়ে যায় । কি করনীয় ?\"\n"
+        "#Hallucinated Summary#: \"পা জ্বলানোর অনুভূতি স্থায়ী হয় না, হাঁটা চলায় স্থায়ী হয়। উচ্চতা-ওজন অনুপাত "
+        "নিয়মিত।  ডাক্তারের পরামর্শ কবুল করুন।\"\n"
+        "You should try your best to make the summary become hallucinated. #Hallucinated Summary# can only have "
+        "about 5 more words than #Right Summary#.\n"
+        "#Document#: <Here is the test document>\n"
+        "#Right Summary#: <Here is the right summary of the test document>\n"
+        "#Hallucinated Summary#: Generate"
+    )
 
     prompt_map = {
         "Intrinsic": prompt_1,
         "Non-factual": prompt_2,
-        "Factual Contradiction": prompt_3,
+        "Factual": prompt_3,
     }
 
     document_key = os.getenv("SUMM_DOCUMENT_COLUMN", "question")
