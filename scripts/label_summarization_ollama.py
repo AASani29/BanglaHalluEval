@@ -6,7 +6,7 @@ Writes a new CSV with an added column `is_hallucinated`.
 
 Usage:
     python scripts/label_summarization_ollama.py \
-        --input "Hallucination Generated Answers/summarization_3000.csv" \
+        --input "Hallucination Generated Answers/summarization_3000_corrected.csv" \
         --output "Results/summarization_3000_labeled_qwen32b.csv" \
         --model qwen2.5:32b-instruct \
         --ollama-url https://9muhkemuvu0zwi-11434.proxy.runpod.net
