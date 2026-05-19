@@ -49,12 +49,12 @@ def call_ollama(prompt: str, model: str, base_url: str) -> Optional[str]:
         "prompt": prompt,
         "stream": False,
         "options": {
-            "num_predict": 64,  # higher to let deepseek finish its think block
+            "num_predict": -1,  # unlimited — deepseek needs long think chains
             "temperature": 0,
         },
     }
     try:
-        resp = requests.post(url, json=payload, timeout=120)
+        resp = requests.post(url, json=payload, timeout=300)
         resp.raise_for_status()
         raw = resp.json().get("response", "").strip()
         cleaned = strip_think_tags(raw)
