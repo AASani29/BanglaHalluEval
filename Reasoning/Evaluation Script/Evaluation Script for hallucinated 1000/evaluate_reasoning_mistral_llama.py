@@ -76,8 +76,9 @@ def call_ollama(prompt: str, model: str, base_url: str) -> str:
         "model": model,
         "prompt": prompt,
         "stream": False,
+        "format": "json",
         "options": {
-            "num_predict": -1,
+            "num_predict": 32,
             "temperature": 0,
         },
     }
