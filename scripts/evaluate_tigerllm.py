@@ -32,7 +32,7 @@ try:
 except ImportError:
     raise SystemExit("Run: pip install transformers torch accelerate")
 
-MODEL_ID = "md-nishat-008/TigerLLM-9B-it"
+MODEL_ID = "/workspace/TigerLLM"
 
 # ── Prompts ────────────────────────────────────────────────────────────────────
 
@@ -74,31 +74,45 @@ REASONING_PROMPT = (
 
 # ── Model loading ──────────────────────────────────────────────────────────────
 
+BATCH_SIZE = 8  # process 8 samples at once
+
+
 def load_model():
     print(f"Loading {MODEL_ID} ...")
     tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
+    tokenizer.padding_side = "left"  # required for batched generation
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
         device_map="auto",
-        torch_dtype=torch.bfloat16,
+        dtype=torch.bfloat16,
     )
     model.eval()
     print("Model loaded.")
     return tokenizer, model
 
 
-def generate(prompt: str, tokenizer, model, max_new_tokens: int = 16) -> str:
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+def generate_batch(prompts: list, tokenizer, model, max_new_tokens: int = 16) -> list:
+    inputs = tokenizer(prompts, return_tensors="pt", padding=True, truncation=True, max_length=2048).to(model.device)
+    input_len = inputs["input_ids"].shape[1]
     with torch.no_grad():
-        output = model.generate(
+        outputs = model.generate(
             **inputs,
             max_new_tokens=max_new_tokens,
             do_sample=False,
             temperature=1.0,
             pad_token_id=tokenizer.eos_token_id,
         )
-    decoded = tokenizer.decode(output[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
-    return decoded.strip()
+    results = []
+    for out in outputs:
+        decoded = tokenizer.decode(out[input_len:], skip_special_tokens=True)
+        results.append(decoded.strip())
+    return results
+
+
+def generate(prompt: str, tokenizer, model, max_new_tokens: int = 16) -> str:
+    return generate_batch([prompt], tokenizer, model, max_new_tokens)[0]
 
 # ── Label normalizers ──────────────────────────────────────────────────────────
 
@@ -154,26 +168,29 @@ def run_qa(tokenizer, model, resume: bool) -> None:
                     completed.add(sid)
         print(f"  Resuming — {len(completed)} rows done.")
 
+    pending = [(i, r) for i, r in enumerate(rows)
+               if not (resume and (r.get("id") or r.get("source_id") or str(i)) in completed)]
+
     write_header = not Path(output_file).exists() or Path(output_file).stat().st_size == 0
     with open(output_file, "a", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         if write_header:
             writer.writeheader()
 
-        for i, r in enumerate(rows):
-            sid = r.get("id") or r.get("source_id") or str(i)
-            if resume and sid in completed:
-                continue
-            prompt = QA_PROMPT.format(
+        for batch_start in range(0, len(pending), BATCH_SIZE):
+            batch = pending[batch_start:batch_start + BATCH_SIZE]
+            prompts = [QA_PROMPT.format(
                 question=r.get("question", ""),
                 answer=r.get("hallucinated_answer", "") or r.get("model_answer", ""),
-            )
-            raw = generate(prompt, tokenizer, model)
-            label = normalize_yesno(raw)
-            r_out = dict(r)
-            r_out["is_hallucinated"] = label
-            writer.writerow(r_out)
-            print(f"  {i}: {sid} -> {label}")
+            ) for _, r in batch]
+            raws = generate_batch(prompts, tokenizer, model)
+            for (i, r), raw in zip(batch, raws):
+                sid = r.get("id") or r.get("source_id") or str(i)
+                label = normalize_yesno(raw)
+                r_out = dict(r)
+                r_out["is_hallucinated"] = label
+                writer.writerow(r_out)
+                print(f"  {i}: {sid} -> {label}")
 
     print(f"  Saved to {output_file}")
 
@@ -198,25 +215,29 @@ def run_summ(input_file: str, output_file: str, tokenizer, model, resume: bool) 
                     completed.add(sid)
         print(f"  Resuming — {len(completed)} rows done.")
 
+    pending = [(i, r) for i, r in enumerate(rows)
+               if not (resume and (r.get("id") or r.get("source_id") or str(i)) in completed)]
+
     write_header = not Path(output_file).exists() or Path(output_file).stat().st_size == 0
     with open(output_file, "a", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         if write_header:
             writer.writeheader()
 
-        for i, r in enumerate(rows):
-            sid = r.get("id") or r.get("source_id") or str(i)
-            if resume and sid in completed:
-                continue
-            document = r.get("document", "") or r.get("question", "")
-            summary = r.get("hallucinated_summary", "") or r.get("summary", "") or r.get("model_summary", "")
-            prompt = SUMM_PROMPT.format(document=document, summary=summary)
-            raw = generate(prompt, tokenizer, model)
-            label = normalize_yesno(raw)
-            r_out = dict(r)
-            r_out["is_hallucinated"] = label
-            writer.writerow(r_out)
-            print(f"  {i}: {sid} -> {label}")
+        for batch_start in range(0, len(pending), BATCH_SIZE):
+            batch = pending[batch_start:batch_start + BATCH_SIZE]
+            prompts = [SUMM_PROMPT.format(
+                document=r.get("document", "") or r.get("question", ""),
+                summary=r.get("hallucinated_summary", "") or r.get("summary", "") or r.get("model_summary", ""),
+            ) for _, r in batch]
+            raws = generate_batch(prompts, tokenizer, model)
+            for (i, r), raw in zip(batch, raws):
+                sid = r.get("id") or r.get("source_id") or str(i)
+                label = normalize_yesno(raw)
+                r_out = dict(r)
+                r_out["is_hallucinated"] = label
+                writer.writerow(r_out)
+                print(f"  {i}: {sid} -> {label}")
 
     print(f"  Saved to {output_file}")
 
