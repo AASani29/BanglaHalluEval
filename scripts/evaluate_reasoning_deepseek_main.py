@@ -56,10 +56,9 @@ Do not explain your reasoning or output anything else.
             "model": MODEL,
             "prompt": prompt,
             "stream": False,
-            "format": "json",
             "options": {
                 "num_ctx": 8192,
-                "num_predict": 1024,
+                "num_predict": 2048,
                 "temperature": 0,
             }
         }
