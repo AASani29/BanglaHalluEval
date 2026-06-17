@@ -224,20 +224,26 @@ def run_csv_task(
         fieldnames.append("is_hallucinated")
 
     # ── Resume: collect already-labeled IDs ───────────────────────────────────
-    completed: set = set()
+    from collections import Counter
+    completed = Counter()
     if out.exists():
         with out.open(newline="", encoding="utf-8", errors="replace") as f:
             for r in csv.DictReader(f):
                 sid = r.get("id") or r.get("source_id")
                 lbl = r.get("is_hallucinated", "")
                 if sid and lbl in ("yes", "no", "Yes", "No"):
-                    completed.add(sid)
-        print(f"  Resuming — {len(completed)} rows already labeled.")
+                    completed[sid] += 1
+        print(f"  Resuming — {sum(completed.values())} rows already labeled.")
 
-    pending = [
-        (i, r) for i, r in enumerate(rows)
-        if (r.get("id") or r.get("source_id") or str(i)) not in completed
-    ]
+    completed_tracker = Counter(completed)
+    pending = []
+    for i, r in enumerate(rows):
+        sid = r.get("id") or r.get("source_id") or str(i)
+        if completed_tracker[sid] > 0:
+            completed_tracker[sid] -= 1
+        else:
+            pending.append((i, r))
+
     print(f"  Total rows: {len(rows)} | Pending: {len(pending)}")
 
     write_header = not out.exists() or out.stat().st_size == 0
@@ -400,7 +406,7 @@ def main() -> None:
             "Add it to the .env file in the project root or export it."
         )
 
-    client = OpenAI(api_key=api_key)
+    client = OpenAI(api_key=api_key, timeout=30.0)
     tasks  = get_tasks(client)
     to_run = TASK_ORDER if args.task == "all" else [args.task]
 
