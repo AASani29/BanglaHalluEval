@@ -6,7 +6,7 @@ EVIDENCE (the source medical query/document being summarized):
 CANDIDATE SUMMARY: {candidate}
 
 Decompose the CANDIDATE SUMMARY into atomic factual claims (each medical fact,
-symptom, medication, decision, or instruction). For each claim, copy a verbatim
+symptom, medication, decision, or instruction). For each claim, copy a word-for-word
 supporting span from EVIDENCE into "supported_by" (empty string if no such span
 exists), then assign one of:
 

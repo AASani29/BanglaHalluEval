@@ -7,7 +7,7 @@ QUESTION: {question}
 CANDIDATE ANSWER: {candidate}
 
 Decompose the CANDIDATE ANSWER into atomic factual claims. For each claim:
-  - Copy a verbatim supporting span from EVIDENCE into "supported_by"
+  - Copy a word-for-word supporting span from EVIDENCE into "supported_by"
     (empty string if no such span exists).
   - Set "status" to one of:
       "supported"    - claim is directly entailed by the cited span
