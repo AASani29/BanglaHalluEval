@@ -153,7 +153,23 @@ def parse_json(raw: str) -> tuple[Optional[dict], Optional[str]]:
     return obj, None
 
 
+def _sanitize_claims(raw_claims) -> list:
+    """Coerce whatever the judge produced under `claims` into a list of dicts.
+
+    Small open-weight judges occasionally emit `"claims": ["some text", ...]`
+    (list of strings) or `"claims": "some text"` (bare string) instead of
+    the expected list of dicts. We keep only dict entries so downstream
+    aggregation never blows up on `.get()` on a str.
+    """
+    if isinstance(raw_claims, dict):
+        raw_claims = [raw_claims]
+    if not isinstance(raw_claims, list):
+        return []
+    return [c for c in raw_claims if isinstance(c, dict)]
+
+
 def aggregate_verdict(claims: list, missing_threshold: float = 0.30) -> str:
+    claims = _sanitize_claims(claims)
     if not claims:
         return "unknown"
     statuses = [str(c.get("status", "")).lower().strip() for c in claims]
@@ -183,7 +199,7 @@ def make_output_row(task: str, raw: Optional[str], parsed: Optional[dict],
         verdict_model = "unknown"
         verdict_agg = "unknown"
     else:
-        claims = parsed.get("claims") or []
+        claims = _sanitize_claims(parsed.get("claims"))
         verdict_model = normalize_verdict(parsed.get("verdict"))
         verdict_agg   = aggregate_verdict(claims, MISSING_THRESHOLD[task])
     statuses = [str(c.get("status", "")).lower().strip() for c in claims]
@@ -289,8 +305,16 @@ def run_one(model: ModelConfig, task: str, track: str,
                     break
                 time.sleep(0.4 + 0.5 * attempt)
 
-            row_out = {k: row[k] for k in df_in.columns}
-            row_out.update(make_output_row(task, raw, parsed, err, id_key))
+            # Defensive: any unexpected shape in the parsed JSON should NOT kill
+            # the whole run. Fall back to an "unknown" row so --resume moves on.
+            try:
+                row_out = {k: row[k] for k in df_in.columns}
+                row_out.update(make_output_row(task, raw, parsed, err, id_key))
+            except Exception as exc:
+                row_out = {k: row[k] for k in df_in.columns}
+                row_out.update(make_output_row(task, raw, None,
+                                               f"post_parse_error: {exc}", id_key))
+
             writer.writerow(row_out)
             fh.flush()
             try:
