@@ -1,0 +1,81 @@
+[Sun Jul  5 09:28:35 UTC 2026] starting mistral_nemo -> full_ecot_run/results/_logs/mistral_nemo_20260705_092835.log
+[mistral_nemo] task=qa track=A  total=1000  done=0  todo=1000
+  [mistral_nemo] qa/A  20/1000  rate=0.46/s  eta=35.8min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  40/1000  rate=0.50/s  eta=32.1min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  60/1000  rate=0.48/s  eta=32.4min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  80/1000  rate=0.48/s  eta=32.0min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  100/1000  rate=0.48/s  eta=31.3min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  120/1000  rate=0.47/s  eta=31.4min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  140/1000  rate=0.47/s  eta=30.4min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  160/1000  rate=0.47/s  eta=29.5min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  180/1000  rate=0.48/s  eta=28.7min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  200/1000  rate=0.48/s  eta=27.9min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  220/1000  rate=0.48/s  eta=27.1min  last: verdict_model=no  agg=yes  sup/con/mis=1/0/1
+  [mistral_nemo] qa/A  240/1000  rate=0.48/s  eta=26.4min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  260/1000  rate=0.48/s  eta=25.6min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  280/1000  rate=0.48/s  eta=25.0min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  300/1000  rate=0.48/s  eta=24.3min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  320/1000  rate=0.48/s  eta=23.5min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  340/1000  rate=0.49/s  eta=22.6min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  360/1000  rate=0.49/s  eta=21.9min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  380/1000  rate=0.49/s  eta=21.1min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  400/1000  rate=0.49/s  eta=20.4min  last: verdict_model=no  agg=yes  sup/con/mis=1/0/2
+  [mistral_nemo] qa/A  420/1000  rate=0.49/s  eta=19.8min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  440/1000  rate=0.49/s  eta=19.1min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  460/1000  rate=0.49/s  eta=18.4min  last: verdict_model=no  agg=yes  sup/con/mis=1/0/1
+  [mistral_nemo] qa/A  480/1000  rate=0.49/s  eta=17.6min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  500/1000  rate=0.49/s  eta=17.0min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  520/1000  rate=0.49/s  eta=16.3min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  540/1000  rate=0.49/s  eta=15.6min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  560/1000  rate=0.49/s  eta=14.9min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  580/1000  rate=0.49/s  eta=14.1min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  600/1000  rate=0.49/s  eta=13.5min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  620/1000  rate=0.49/s  eta=12.9min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  640/1000  rate=0.49/s  eta=12.2min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  660/1000  rate=0.49/s  eta=11.5min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  680/1000  rate=0.49/s  eta=10.8min  last: verdict_model=no  agg=yes  sup/con/mis=2/0/1
+  [mistral_nemo] qa/A  700/1000  rate=0.49/s  eta=10.1min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  720/1000  rate=0.49/s  eta=9.5min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  740/1000  rate=0.49/s  eta=8.8min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  760/1000  rate=0.49/s  eta=8.1min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  780/1000  rate=0.49/s  eta=7.4min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  800/1000  rate=0.49/s  eta=6.7min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  820/1000  rate=0.49/s  eta=6.1min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  840/1000  rate=0.50/s  eta=5.4min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  860/1000  rate=0.50/s  eta=4.7min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  880/1000  rate=0.50/s  eta=4.0min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  900/1000  rate=0.50/s  eta=3.4min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  920/1000  rate=0.50/s  eta=2.7min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  940/1000  rate=0.50/s  eta=2.0min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  960/1000  rate=0.50/s  eta=1.3min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/A  980/1000  rate=0.50/s  eta=0.7min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A  1000/1000  rate=0.50/s  eta=0.0min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/A -> full_ecot_run/results/mistral_nemo/qa_gt_ecot.csv
+[mistral_nemo] task=qa track=B  total=4000  done=0  todo=4000
+  [mistral_nemo] qa/B  20/4000  rate=0.54/s  eta=123.6min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [mistral_nemo] qa/B  40/4000  rate=0.51/s  eta=128.5min  last: verdict_model=no  agg=yes  sup/con/mis=0/0/2
+  [mistral_nemo] qa/B  60/4000  rate=0.56/s  eta=118.2min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/B  80/4000  rate=0.59/s  eta=111.0min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/B  100/4000  rate=0.62/s  eta=105.6min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/B  120/4000  rate=0.62/s  eta=104.8min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/B  140/4000  rate=0.62/s  eta=104.0min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/B  160/4000  rate=0.62/s  eta=102.4min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+  [mistral_nemo] qa/B  180/4000  rate=0.62/s  eta=102.1min  last: verdict_model=yes  agg=yes  sup/con/mis=0/0/1
+Traceback (most recent call last):
+  File "/workspace/BanglaHalluEval/full_ecot_run/scripts/02_run_mistral_nemo.py", line 48, in <module>
+    main()
+  File "/workspace/BanglaHalluEval/full_ecot_run/scripts/02_run_mistral_nemo.py", line 44, in main
+    run_one(model, t, tr, resume=not args.no_resume)
+  File "/workspace/BanglaHalluEval/full_ecot_run/scripts/_ecot_core.py", line 293, in run_one
+    row_out.update(make_output_row(task, raw, parsed, err, id_key))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/BanglaHalluEval/full_ecot_run/scripts/_ecot_core.py", line 188, in make_output_row
+    verdict_agg   = aggregate_verdict(claims, MISSING_THRESHOLD[task])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/BanglaHalluEval/full_ecot_run/scripts/_ecot_core.py", line 159, in aggregate_verdict
+    statuses = [str(c.get("status", "")).lower().strip() for c in claims]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/BanglaHalluEval/full_ecot_run/scripts/_ecot_core.py", line 159, in <listcomp>
+    statuses = [str(c.get("status", "")).lower().strip() for c in claims]
+                    ^^^^^
+AttributeError: 'str' object has no attribute 'get'

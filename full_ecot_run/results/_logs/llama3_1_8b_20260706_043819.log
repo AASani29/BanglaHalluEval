@@ -1,0 +1,5 @@
+[llama3_1_8b] task=qa track=A  total=1000  done=0  todo=1000
+  [llama3_1_8b] qa/A  20/1000  rate=0.22/s  eta=75.7min  last: verdict_model=yes  agg=yes  sup/con/mis=0/1/0
+  [llama3_1_8b] qa/A  40/1000  rate=0.29/s  eta=55.6min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [llama3_1_8b] qa/A  60/1000  rate=0.32/s  eta=49.5min  last: verdict_model=no  agg=no  sup/con/mis=1/0/0
+  [llama3_1_8b] qa/A  80/1000  rate=0.32/s  eta=47.3min  last: verdict_model=no  agg=no  sup/con/mis=2/0/0
