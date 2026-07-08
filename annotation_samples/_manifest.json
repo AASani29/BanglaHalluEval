@@ -1,0 +1,77 @@
+{
+  "study": "BenHalluEval human annotation stratified samples",
+  "seed": 42,
+  "generated_utc": "2026-07-08T19:54:06.456709Z",
+  "codemix_gold_conversion_disjoint": true,
+  "summarization_source": "summarization_3000_corrected.csv",
+  "files": {
+    "gqa_hallucinated.jsonl": {
+      "count": 200,
+      "per_type": {
+        "comprehension": 50,
+        "factualness": 50,
+        "inference": 50,
+        "specificity": 50
+      }
+    },
+    "gqa_gold.jsonl": {
+      "count": 50,
+      "per_type": {
+        "gold": 50
+      }
+    },
+    "summarization_hallucinated.jsonl": {
+      "count": 150,
+      "per_type": {
+        "Factual Contradiction": 50,
+        "Intrinsic": 50,
+        "Non-factual": 50
+      }
+    },
+    "summarization_gold.jsonl": {
+      "count": 50,
+      "per_type": {
+        "gold": 50
+      }
+    },
+    "reasoning_hallucinated.jsonl": {
+      "count": 250,
+      "per_type": {
+        "arithmetic_slip": 50,
+        "formula_misapplication": 50,
+        "hallucinated_intermediate_fact": 50,
+        "invalid_deduction": 50,
+        "semantic_drift": 50
+      }
+    },
+    "reasoning_gold.jsonl": {
+      "count": 50,
+      "per_type": {
+        "gold": 50
+      }
+    },
+    "codemix_hallucinated.jsonl": {
+      "count": 200,
+      "per_type": {
+        "comprehension": 50,
+        "factualness": 50,
+        "inference": 50,
+        "specificity": 50
+      }
+    },
+    "codemix_conversion.jsonl": {
+      "count": 100,
+      "per_type": {
+        "conversion": 100
+      }
+    },
+    "codemix_gold.jsonl": {
+      "count": 50,
+      "per_type": {
+        "gold": 50
+      }
+    }
+  },
+  "grand_total": 1100,
+  "shortfalls": []
+}
