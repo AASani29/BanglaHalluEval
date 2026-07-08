@@ -161,7 +161,8 @@ class TituLLM:
         print(f"[titullm] ready on {self.model.device}\n")
 
     @torch.no_grad()
-    def generate(self, prompt: str, max_new_tokens: int = 16) -> str:
+    def generate(self, prompt: str, max_new_tokens: int = 16,
+                 do_sample: bool = False, temperature: float = 0.0) -> str:
         # Two-step to stay compatible with both old and new `transformers`:
         # apply_chat_template can return BatchEncoding (dict-like) in >=4.44,
         # so we ask for text and tokenize explicitly.
@@ -170,12 +171,14 @@ class TituLLM:
             messages, add_generation_prompt=True, tokenize=False,
         )
         enc = self.tokenizer(prompt_text, return_tensors="pt").to(self.model.device)
-        out = self.model.generate(
-            **enc,
+        gen_kwargs = dict(
             max_new_tokens=max_new_tokens,
-            do_sample=False,
+            do_sample=do_sample,
             pad_token_id=self.tokenizer.eos_token_id,
         )
+        if do_sample:
+            gen_kwargs["temperature"] = max(temperature, 0.01)
+        out = self.model.generate(**enc, **gen_kwargs)
         gen = out[0][enc.input_ids.shape[-1]:]
         return self.tokenizer.decode(gen, skip_special_tokens=True).strip()
 
@@ -209,8 +212,11 @@ def run_task(task_key: str, llm: TituLLM, limit: Optional[int] = None) -> None:
         rows = list(reader)
         fieldnames = list(reader.fieldnames or [])
 
-    if "is_hallucinated" not in fieldnames:
-        fieldnames.append("is_hallucinated")
+    # Add raw_response so we can inspect what the model actually said
+    # (essential for diagnosing yes-bias / parser calibration).
+    for extra in ("raw_response", "is_hallucinated"):
+        if extra not in fieldnames:
+            fieldnames.append(extra)
 
     # Load already-done ids for resume
     done = set()
@@ -247,9 +253,25 @@ def run_task(task_key: str, llm: TituLLM, limit: Optional[int] = None) -> None:
         if write_header:
             w.writeheader()
         for k, (i, sid, r) in enumerate(pending, 1):
-            raw = llm.generate(cfg["prompt"](r), max_new_tokens=16)
+            prompt = cfg["prompt"](r)
+            # Try 1: greedy decoding, short output.
+            raw = llm.generate(prompt, max_new_tokens=16, do_sample=False)
             label = parse_yes_no(raw)
-            out_row = {k2: r[k2] for k2 in fieldnames if k2 != "is_hallucinated" and k2 in r}
+            # Retry on unknown: sample with rising temperature + longer budget
+            # so a chatty model can complete its sentence and expose "yes/no".
+            retry_temps = (0.2, 0.5, 0.8)
+            attempts = [(raw, label)]
+            for temp in retry_temps:
+                if label in ("yes", "no"):
+                    break
+                raw = llm.generate(prompt, max_new_tokens=32,
+                                    do_sample=True, temperature=temp)
+                label = parse_yes_no(raw)
+                attempts.append((raw, label))
+            # Persist raw_response (last attempt; that's what produced the label)
+            out_row = {k2: r.get(k2, "") for k2 in fieldnames
+                       if k2 not in ("raw_response", "is_hallucinated")}
+            out_row["raw_response"] = raw
             out_row["is_hallucinated"] = label
             w.writerow(out_row)
             f.flush()
