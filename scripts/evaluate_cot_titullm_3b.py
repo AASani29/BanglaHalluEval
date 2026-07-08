@@ -133,17 +133,21 @@ class TituLLM:
 
     @torch.no_grad()
     def generate(self, prompt: str, max_new_tokens: int = 512) -> str:
+        # Two-step to stay compatible with both old and new `transformers`:
+        # apply_chat_template can return BatchEncoding (dict-like) in >=4.44,
+        # so we ask for text and tokenize explicitly.
         messages = [{"role": "user", "content": prompt}]
-        inputs = self.tokenizer.apply_chat_template(
-            messages, add_generation_prompt=True, return_tensors="pt",
-        ).to(self.model.device)
+        prompt_text = self.tokenizer.apply_chat_template(
+            messages, add_generation_prompt=True, tokenize=False,
+        )
+        enc = self.tokenizer(prompt_text, return_tensors="pt").to(self.model.device)
         out = self.model.generate(
-            inputs,
+            **enc,
             max_new_tokens=max_new_tokens,
             do_sample=False,
             pad_token_id=self.tokenizer.eos_token_id,
         )
-        gen = out[0][inputs.shape[-1]:]
+        gen = out[0][enc.input_ids.shape[-1]:]
         return self.tokenizer.decode(gen, skip_special_tokens=True).strip()
 
 
