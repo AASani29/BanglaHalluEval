@@ -1,0 +1,251 @@
+﻿blind_id,item_id,split,hallucination_type,gold_answer
+qa-0001,gqa_hallu-0045,hallucinated,comprehension,হ্যারি পটার অ্যান্ড দ্য ডেথলি হ্যালোস
+qa-0002,gqa_hallu-0099,hallucinated,factualness,আরবী মূলক
+qa-0003,gqa_hallu-0185,hallucinated,specificity,জ্বরে
+qa-0004,gqa_hallu-0124,hallucinated,inference,শ্যাজেল
+qa-0005,gqa_hallu-0122,hallucinated,inference,থ্রি-ডি সেন্সর
+qa-0006,gqa_hallu-0168,hallucinated,specificity,প্রমীলা
+qa-0007,gqa_hallu-0010,hallucinated,comprehension,৪৪৮
+qa-0008,gqa_hallu-0177,hallucinated,specificity,ব্যাবিলনে
+qa-0009,gqa_hallu-0198,hallucinated,specificity,সংস্কৃত শব্দ সিন্ধু
+qa-0010,gqa_hallu-0114,hallucinated,inference,ধীরে বহে মেঘনা
+qa-0011,gqa_hallu-0004,hallucinated,comprehension,দমদম বিমানবন্দরে
+qa-0012,gqa_hallu-0052,hallucinated,factualness,বার্নেট ফুটবল ক্লাবে
+qa-0013,gqa_hallu-0016,hallucinated,comprehension,বেলিজের কিউল্লোতে
+qa-0014,gqa_hallu-0090,hallucinated,factualness,সেন্ট পিটার্স হাই স্কুলে
+qa-0015,gqa_gold-0010,gold,gold,৪৪৮
+qa-0016,gqa_hallu-0086,hallucinated,factualness,৬
+qa-0017,gqa_hallu-0116,hallucinated,inference,বেলিজের কিউল্লোতে
+qa-0018,gqa_hallu-0022,hallucinated,comprehension,থ্রি-ডি সেন্সর
+qa-0019,gqa_hallu-0104,hallucinated,inference,দমদম বিমানবন্দরে
+qa-0020,gqa_hallu-0106,hallucinated,inference,ক্যান্সারের
+qa-0021,gqa_gold-0001,gold,gold,আইডেন্টফিাইড
+qa-0022,gqa_gold-0044,gold,gold,৫৭৩ সালে
+qa-0023,gqa_hallu-0062,hallucinated,factualness,রাবিয়া উদ দুরানি
+qa-0024,gqa_hallu-0030,hallucinated,comprehension,১২ জুলাই ১৯৭৭
+qa-0025,gqa_hallu-0127,hallucinated,inference,ব্যাবিলনে
+qa-0026,gqa_gold-0023,gold,gold,খাদিজা বিনতে খুওয়াইলিদ
+qa-0027,gqa_hallu-0073,hallucinated,factualness,খাদিজা বিনতে খুওয়াইলিদ
+qa-0028,gqa_hallu-0046,hallucinated,comprehension,১৯৩৮ সালের ১০ ফেব্রুয়ারি
+qa-0029,gqa_hallu-0175,hallucinated,specificity,ফ্র্যাংক ড্যারাবন্ট
+qa-0030,gqa_gold-0014,gold,gold,ধীরে বহে মেঘনা
+qa-0031,gqa_hallu-0105,hallucinated,inference,ম্যাককরমিক ফুডস অস্ট্রেলিয়া
+qa-0032,gqa_hallu-0096,hallucinated,factualness,১৯৩৮ সালের ১০ ফেব্রুয়ারি
+qa-0033,gqa_hallu-0067,hallucinated,factualness,১৯৯৩-১৯৯৮
+qa-0034,gqa_hallu-0165,hallucinated,specificity,১৮৫৭
+qa-0035,gqa_gold-0049,gold,gold,আরবী মূলক
+qa-0036,gqa_hallu-0200,hallucinated,specificity,"১৮ ফেব্রুয়ারি, ১৮৯৯"
+qa-0037,gqa_hallu-0079,hallucinated,factualness,১১ টি
+qa-0038,gqa_hallu-0080,hallucinated,factualness,১২ জুলাই ১৯৭৭
+qa-0039,gqa_hallu-0013,hallucinated,comprehension,আস্ক
+qa-0040,gqa_hallu-0197,hallucinated,specificity,পীর হজরত শাহ সৈয়দ আব্বাস আলী রাজী
+qa-0041,gqa_hallu-0150,hallucinated,inference,"১৮ ফেব্রুয়ারি, ১৮৯৯"
+qa-0042,gqa_hallu-0028,hallucinated,comprehension,সাফা পর্বতের পাদদেশে যায়েদ-বিন-আরকামের বাড়িতে
+qa-0043,gqa_hallu-0082,hallucinated,factualness,জালালুদ্দিন খিলজি
+qa-0044,gqa_hallu-0100,hallucinated,factualness,"১৮ ফেব্রুয়ারি, ১৮৯৯"
+qa-0045,gqa_gold-0035,gold,gold,জ্বরে
+qa-0046,gqa_hallu-0011,hallucinated,comprehension,"যোগশাস্ত্রের ইষ্টদেবতা[5][6],তেত্রিশ বৈদিক দেবতা[7] বা শতাধিক পৌরাণিক দেবতা"
+qa-0047,gqa_hallu-0134,hallucinated,inference,২৬·৫ বর্গ কিলোমিটার
+qa-0048,gqa_hallu-0125,hallucinated,inference,ফ্র্যাংক ড্যারাবন্ট
+qa-0049,gqa_hallu-0043,hallucinated,comprehension,"রাখালদাস বন্দ্যোপাধ্যায়, ই. জে. এইচ. ম্যাককি ও স্যার জন মার্শাল"
+qa-0050,gqa_gold-0024,gold,gold,শ্যাজেল
+qa-0051,gqa_hallu-0112,hallucinated,inference,রাবিয়া উদ দুরানি
+qa-0052,gqa_hallu-0121,hallucinated,inference,২০১৮
+qa-0053,gqa_hallu-0154,hallucinated,specificity,দমদম বিমানবন্দরে
+qa-0054,gqa_hallu-0131,hallucinated,inference,নিউ ইয়র্ক
+qa-0055,gqa_hallu-0005,hallucinated,comprehension,ম্যাককরমিক ফুডস অস্ট্রেলিয়া
+qa-0056,gqa_hallu-0053,hallucinated,factualness,"৬৭৬,৫৫২ বর্গকিলোমিটার"
+qa-0057,gqa_gold-0042,gold,gold,খ্রিস্টপূর্ব ১ম সহস্রাব্দের ১ম শতাব্দী
+qa-0058,gqa_hallu-0074,hallucinated,factualness,শ্যাজেল
+qa-0059,gqa_gold-0019,gold,gold,১৯.৩০ বর্গ কিঃমিঃ
+qa-0060,gqa_hallu-0006,hallucinated,comprehension,ক্যান্সারের
+qa-0061,gqa_hallu-0061,hallucinated,factualness,"যোগশাস্ত্রের ইষ্টদেবতা[5][6],তেত্রিশ বৈদিক দেবতা[7] বা শতাধিক পৌরাণিক দেবতা"
+qa-0062,gqa_hallu-0136,hallucinated,inference,৬
+qa-0063,gqa_hallu-0139,hallucinated,inference,তাকিহিকো নাকাও
+qa-0064,gqa_hallu-0126,hallucinated,inference,বঙ্গীয় সাহিত্য পরিষদ
+qa-0065,gqa_gold-0032,gold,gold,জালালুদ্দিন খিলজি
+qa-0066,gqa_hallu-0031,hallucinated,comprehension,নিউ ইয়র্ক
+qa-0067,gqa_gold-0005,gold,gold,ম্যাককরমিক ফুডস অস্ট্রেলিয়া
+qa-0068,gqa_hallu-0047,hallucinated,comprehension,পীর হজরত শাহ সৈয়দ আব্বাস আলী রাজী
+qa-0069,gqa_gold-0022,gold,gold,থ্রি-ডি সেন্সর
+qa-0070,gqa_hallu-0003,hallucinated,comprehension,"৬৭৬,৫৫২ বর্গকিলোমিটার"
+qa-0071,gqa_hallu-0157,hallucinated,specificity,১৯৭৯ সালের মে মাসে
+qa-0072,gqa_hallu-0160,hallucinated,specificity,৪৪৮
+qa-0073,gqa_gold-0003,gold,gold,"৬৭৬,৫৫২ বর্গকিলোমিটার"
+qa-0074,gqa_hallu-0107,hallucinated,inference,১৯৭৯ সালের মে মাসে
+qa-0075,gqa_hallu-0153,hallucinated,specificity,"৬৭৬,৫৫২ বর্গকিলোমিটার"
+qa-0076,gqa_gold-0050,gold,gold,"১৮ ফেব্রুয়ারি, ১৮৯৯"
+qa-0077,gqa_hallu-0048,hallucinated,comprehension,সংস্কৃত শব্দ সিন্ধু
+qa-0078,gqa_gold-0012,gold,gold,রাবিয়া উদ দুরানি
+qa-0079,gqa_hallu-0172,hallucinated,specificity,থ্রি-ডি সেন্সর
+qa-0080,gqa_hallu-0078,hallucinated,factualness,সাফা পর্বতের পাদদেশে যায়েদ-বিন-আরকামের বাড়িতে
+qa-0081,gqa_hallu-0085,hallucinated,factualness,জ্বরে
+qa-0082,gqa_hallu-0039,hallucinated,comprehension,তাকিহিকো নাকাও
+qa-0083,gqa_hallu-0158,hallucinated,specificity,কৃষ্ণপান গঙ্গোপাধ্যায়
+qa-0084,gqa_hallu-0014,hallucinated,comprehension,ধীরে বহে মেঘনা
+qa-0085,gqa_gold-0002,gold,gold,বার্নেট ফুটবল ক্লাবে
+qa-0086,gqa_gold-0036,gold,gold,৬
+qa-0087,gqa_hallu-0065,hallucinated,factualness,১৮৫৭
+qa-0088,gqa_hallu-0034,hallucinated,comprehension,২৬·৫ বর্গ কিলোমিটার
+qa-0089,gqa_hallu-0001,hallucinated,comprehension,আইডেন্টফিাইড
+qa-0090,gqa_hallu-0181,hallucinated,specificity,নিউ ইয়র্ক
+qa-0091,gqa_hallu-0169,hallucinated,specificity,১৯.৩০ বর্গ কিঃমিঃ
+qa-0092,gqa_gold-0004,gold,gold,দমদম বিমানবন্দরে
+qa-0093,gqa_hallu-0038,hallucinated,comprehension,সুই সম্রাট ওয়েন
+qa-0094,gqa_hallu-0101,hallucinated,inference,আইডেন্টফিাইড
+qa-0095,gqa_hallu-0183,hallucinated,specificity,১৭৩৪ সালে
+qa-0096,gqa_hallu-0083,hallucinated,factualness,১৭৩৪ সালে
+qa-0097,gqa_hallu-0035,hallucinated,comprehension,জ্বরে
+qa-0098,gqa_hallu-0123,hallucinated,inference,খাদিজা বিনতে খুওয়াইলিদ
+qa-0099,gqa_gold-0025,gold,gold,ফ্র্যাংক ড্যারাবন্ট
+qa-0100,gqa_gold-0028,gold,gold,সাফা পর্বতের পাদদেশে যায়েদ-বিন-আরকামের বাড়িতে
+qa-0101,gqa_hallu-0120,hallucinated,inference,बमपन्थी गनतन्त्री दलेर
+qa-0102,gqa_hallu-0129,hallucinated,inference,১১ টি
+qa-0103,gqa_gold-0017,gold,gold,১৯৯৩-১৯৯৮
+qa-0104,gqa_gold-0013,gold,gold,আস্ক
+qa-0105,gqa_gold-0046,gold,gold,১৯৩৮ সালের ১০ ফেব্রুয়ারি
+qa-0106,gqa_hallu-0033,hallucinated,comprehension,১৭৩৪ সালে
+qa-0107,gqa_hallu-0132,hallucinated,inference,জালালুদ্দিন খিলজি
+qa-0108,gqa_hallu-0173,hallucinated,specificity,খাদিজা বিনতে খুওয়াইলিদ
+qa-0109,gqa_hallu-0113,hallucinated,inference,আস্ক
+qa-0110,gqa_hallu-0049,hallucinated,comprehension,আরবী মূলক
+qa-0111,gqa_gold-0021,gold,gold,২০১৮
+qa-0112,gqa_hallu-0147,hallucinated,inference,পীর হজরত শাহ সৈয়দ আব্বাস আলী রাজী
+qa-0113,gqa_hallu-0077,hallucinated,factualness,ব্যাবিলনে
+qa-0114,gqa_gold-0020,gold,gold,बमपन्थी गनतन्त्री दलेर
+qa-0115,gqa_gold-0011,gold,gold,"যোগশাস্ত্রের ইষ্টদেবতা[5][6],তেত্রিশ বৈদিক দেবতা[7] বা শতাধিক পৌরাণিক দেবতা"
+qa-0116,gqa_gold-0039,gold,gold,তাকিহিকো নাকাও
+qa-0117,gqa_gold-0040,gold,gold,সেন্ট পিটার্স হাই স্কুলে
+qa-0118,gqa_hallu-0141,hallucinated,inference,১৯৮৫ সালে
+qa-0119,gqa_hallu-0020,hallucinated,comprehension,बमपन्थी गनतन्त्री दलेर
+qa-0120,gqa_hallu-0149,hallucinated,inference,আরবী মূলক
+qa-0121,gqa_hallu-0111,hallucinated,inference,"যোগশাস্ত্রের ইষ্টদেবতা[5][6],তেত্রিশ বৈদিক দেবতা[7] বা শতাধিক পৌরাণিক দেবতা"
+qa-0122,gqa_gold-0026,gold,gold,বঙ্গীয় সাহিত্য পরিষদ
+qa-0123,gqa_hallu-0188,hallucinated,specificity,সুই সম্রাট ওয়েন
+qa-0124,gqa_hallu-0178,hallucinated,specificity,সাফা পর্বতের পাদদেশে যায়েদ-বিন-আরকামের বাড়িতে
+qa-0125,gqa_hallu-0133,hallucinated,inference,১৭৩৪ সালে
+qa-0126,gqa_hallu-0066,hallucinated,factualness,বেলিজের কিউল্লোতে
+qa-0127,gqa_gold-0009,gold,gold,১৩শ শতাব্দীতে
+qa-0128,gqa_gold-0016,gold,gold,বেলিজের কিউল্লোতে
+qa-0129,gqa_hallu-0182,hallucinated,specificity,জালালুদ্দিন খিলজি
+qa-0130,gqa_hallu-0145,hallucinated,inference,হ্যারি পটার অ্যান্ড দ্য ডেথলি হ্যালোস
+qa-0131,gqa_hallu-0110,hallucinated,inference,৪৪৮
+qa-0132,gqa_hallu-0135,hallucinated,inference,জ্বরে
+qa-0133,gqa_hallu-0064,hallucinated,factualness,ধীরে বহে মেঘনা
+qa-0134,gqa_gold-0043,gold,gold,"রাখালদাস বন্দ্যোপাধ্যায়, ই. জে. এইচ. ম্যাককি ও স্যার জন মার্শাল"
+qa-0135,gqa_hallu-0194,hallucinated,specificity,৫৭৩ সালে
+qa-0136,gqa_hallu-0037,hallucinated,comprehension,মধ্যপ্রাচ্যে
+qa-0137,gqa_hallu-0191,hallucinated,specificity,১৯৮৫ সালে
+qa-0138,gqa_hallu-0102,hallucinated,inference,বার্নেট ফুটবল ক্লাবে
+qa-0139,gqa_hallu-0128,hallucinated,inference,সাফা পর্বতের পাদদেশে যায়েদ-বিন-আরকামের বাড়িতে
+qa-0140,gqa_hallu-0186,hallucinated,specificity,৬
+qa-0141,gqa_hallu-0146,hallucinated,inference,১৯৩৮ সালের ১০ ফেব্রুয়ারি
+qa-0142,gqa_hallu-0055,hallucinated,factualness,ম্যাককরমিক ফুডস অস্ট্রেলিয়া
+qa-0143,gqa_hallu-0017,hallucinated,comprehension,১৯৯৩-১৯৯৮
+qa-0144,gqa_hallu-0162,hallucinated,specificity,রাবিয়া উদ দুরানি
+qa-0145,gqa_hallu-0103,hallucinated,inference,"৬৭৬,৫৫২ বর্গকিলোমিটার"
+qa-0146,gqa_hallu-0081,hallucinated,factualness,নিউ ইয়র্ক
+qa-0147,gqa_gold-0033,gold,gold,১৭৩৪ সালে
+qa-0148,gqa_hallu-0176,hallucinated,specificity,বঙ্গীয় সাহিত্য পরিষদ
+qa-0149,gqa_hallu-0015,hallucinated,comprehension,১৮৫৭
+qa-0150,gqa_hallu-0084,hallucinated,factualness,২৬·৫ বর্গ কিলোমিটার
+qa-0151,gqa_gold-0018,gold,gold,প্রমীলা
+qa-0152,gqa_hallu-0143,hallucinated,inference,"রাখালদাস বন্দ্যোপাধ্যায়, ই. জে. এইচ. ম্যাককি ও স্যার জন মার্শাল"
+qa-0153,gqa_hallu-0070,hallucinated,factualness,बमपन्थी गनतन्त्री दलेर
+qa-0154,gqa_hallu-0171,hallucinated,specificity,২০১৮
+qa-0155,gqa_hallu-0119,hallucinated,inference,১৯.৩০ বর্গ কিঃমিঃ
+qa-0156,gqa_hallu-0166,hallucinated,specificity,বেলিজের কিউল্লোতে
+qa-0157,gqa_gold-0045,gold,gold,হ্যারি পটার অ্যান্ড দ্য ডেথলি হ্যালোস
+qa-0158,gqa_hallu-0137,hallucinated,inference,মধ্যপ্রাচ্যে
+qa-0159,gqa_hallu-0044,hallucinated,comprehension,৫৭৩ সালে
+qa-0160,gqa_hallu-0156,hallucinated,specificity,ক্যান্সারের
+qa-0161,gqa_hallu-0019,hallucinated,comprehension,১৯.৩০ বর্গ কিঃমিঃ
+qa-0162,gqa_hallu-0069,hallucinated,factualness,১৯.৩০ বর্গ কিঃমিঃ
+qa-0163,gqa_hallu-0054,hallucinated,factualness,দমদম বিমানবন্দরে
+qa-0164,gqa_hallu-0091,hallucinated,factualness,১৯৮৫ সালে
+qa-0165,gqa_hallu-0095,hallucinated,factualness,হ্যারি পটার অ্যান্ড দ্য ডেথলি হ্যালোস
+qa-0166,gqa_hallu-0042,hallucinated,comprehension,খ্রিস্টপূর্ব ১ম সহস্রাব্দের ১ম শতাব্দী
+qa-0167,gqa_hallu-0094,hallucinated,factualness,৫৭৩ সালে
+qa-0168,gqa_hallu-0163,hallucinated,specificity,আস্ক
+qa-0169,gqa_hallu-0117,hallucinated,inference,১৯৯৩-১৯৯৮
+qa-0170,gqa_gold-0006,gold,gold,ক্যান্সারের
+qa-0171,gqa_hallu-0199,hallucinated,specificity,আরবী মূলক
+qa-0172,gqa_hallu-0026,hallucinated,comprehension,বঙ্গীয় সাহিত্য পরিষদ
+qa-0173,gqa_gold-0038,gold,gold,সুই সম্রাট ওয়েন
+qa-0174,gqa_hallu-0192,hallucinated,specificity,খ্রিস্টপূর্ব ১ম সহস্রাব্দের ১ম শতাব্দী
+qa-0175,gqa_hallu-0075,hallucinated,factualness,ফ্র্যাংক ড্যারাবন্ট
+qa-0176,gqa_hallu-0059,hallucinated,factualness,১৩শ শতাব্দীতে
+qa-0177,gqa_hallu-0170,hallucinated,specificity,बमपन्थी गनतन्त्री दलेर
+qa-0178,gqa_hallu-0193,hallucinated,specificity,"রাখালদাস বন্দ্যোপাধ্যায়, ই. জে. এইচ. ম্যাককি ও স্যার জন মার্শাল"
+qa-0179,gqa_hallu-0018,hallucinated,comprehension,প্রমীলা
+qa-0180,gqa_hallu-0050,hallucinated,comprehension,"১৮ ফেব্রুয়ারি, ১৮৯৯"
+qa-0181,gqa_hallu-0148,hallucinated,inference,সংস্কৃত শব্দ সিন্ধু
+qa-0182,gqa_hallu-0093,hallucinated,factualness,"রাখালদাস বন্দ্যোপাধ্যায়, ই. জে. এইচ. ম্যাককি ও স্যার জন মার্শাল"
+qa-0183,gqa_hallu-0159,hallucinated,specificity,১৩শ শতাব্দীতে
+qa-0184,gqa_hallu-0161,hallucinated,specificity,"যোগশাস্ত্রের ইষ্টদেবতা[5][6],তেত্রিশ বৈদিক দেবতা[7] বা শতাধিক পৌরাণিক দেবতা"
+qa-0185,gqa_hallu-0076,hallucinated,factualness,বঙ্গীয় সাহিত্য পরিষদ
+qa-0186,gqa_hallu-0142,hallucinated,inference,খ্রিস্টপূর্ব ১ম সহস্রাব্দের ১ম শতাব্দী
+qa-0187,gqa_hallu-0021,hallucinated,comprehension,২০১৮
+qa-0188,gqa_hallu-0097,hallucinated,factualness,পীর হজরত শাহ সৈয়দ আব্বাস আলী রাজী
+qa-0189,gqa_hallu-0032,hallucinated,comprehension,জালালুদ্দিন খিলজি
+qa-0190,gqa_hallu-0138,hallucinated,inference,সুই সম্রাট ওয়েন
+qa-0191,gqa_hallu-0118,hallucinated,inference,প্রমীলা
+qa-0192,gqa_hallu-0187,hallucinated,specificity,মধ্যপ্রাচ্যে
+qa-0193,gqa_hallu-0012,hallucinated,comprehension,রাবিয়া উদ দুরানি
+qa-0194,gqa_hallu-0068,hallucinated,factualness,প্রমীলা
+qa-0195,gqa_gold-0027,gold,gold,ব্যাবিলনে
+qa-0196,gqa_hallu-0089,hallucinated,factualness,তাকিহিকো নাকাও
+qa-0197,gqa_hallu-0092,hallucinated,factualness,খ্রিস্টপূর্ব ১ম সহস্রাব্দের ১ম শতাব্দী
+qa-0198,gqa_hallu-0025,hallucinated,comprehension,ফ্র্যাংক ড্যারাবন্ট
+qa-0199,gqa_hallu-0098,hallucinated,factualness,সংস্কৃত শব্দ সিন্ধু
+qa-0200,gqa_gold-0031,gold,gold,নিউ ইয়র্ক
+qa-0201,gqa_gold-0041,gold,gold,১৯৮৫ সালে
+qa-0202,gqa_hallu-0087,hallucinated,factualness,মধ্যপ্রাচ্যে
+qa-0203,gqa_hallu-0196,hallucinated,specificity,১৯৩৮ সালের ১০ ফেব্রুয়ারি
+qa-0204,gqa_gold-0030,gold,gold,১২ জুলাই ১৯৭৭
+qa-0205,gqa_hallu-0040,hallucinated,comprehension,সেন্ট পিটার্স হাই স্কুলে
+qa-0206,gqa_gold-0015,gold,gold,১৮৫৭
+qa-0207,gqa_hallu-0088,hallucinated,factualness,সুই সম্রাট ওয়েন
+qa-0208,gqa_gold-0034,gold,gold,২৬·৫ বর্গ কিলোমিটার
+qa-0209,gqa_hallu-0179,hallucinated,specificity,১১ টি
+qa-0210,gqa_hallu-0041,hallucinated,comprehension,১৯৮৫ সালে
+qa-0211,gqa_gold-0007,gold,gold,১৯৭৯ সালের মে মাসে
+qa-0212,gqa_hallu-0195,hallucinated,specificity,হ্যারি পটার অ্যান্ড দ্য ডেথলি হ্যালোস
+qa-0213,gqa_hallu-0002,hallucinated,comprehension,বার্নেট ফুটবল ক্লাবে
+qa-0214,gqa_gold-0008,gold,gold,কৃষ্ণপান গঙ্গোপাধ্যায়
+qa-0215,gqa_hallu-0072,hallucinated,factualness,থ্রি-ডি সেন্সর
+qa-0216,gqa_hallu-0151,hallucinated,specificity,আইডেন্টফিাইড
+qa-0217,gqa_hallu-0115,hallucinated,inference,১৮৫৭
+qa-0218,gqa_hallu-0057,hallucinated,factualness,১৯৭৯ সালের মে মাসে
+qa-0219,gqa_hallu-0108,hallucinated,inference,কৃষ্ণপান গঙ্গোপাধ্যায়
+qa-0220,gqa_gold-0037,gold,gold,মধ্যপ্রাচ্যে
+qa-0221,gqa_hallu-0180,hallucinated,specificity,১২ জুলাই ১৯৭৭
+qa-0222,gqa_hallu-0167,hallucinated,specificity,১৯৯৩-১৯৯৮
+qa-0223,gqa_hallu-0184,hallucinated,specificity,২৬·৫ বর্গ কিলোমিটার
+qa-0224,gqa_hallu-0051,hallucinated,factualness,আইডেন্টফিাইড
+qa-0225,gqa_hallu-0144,hallucinated,inference,৫৭৩ সালে
+qa-0226,gqa_gold-0048,gold,gold,সংস্কৃত শব্দ সিন্ধু
+qa-0227,gqa_hallu-0155,hallucinated,specificity,ম্যাককরমিক ফুডস অস্ট্রেলিয়া
+qa-0228,gqa_hallu-0130,hallucinated,inference,১২ জুলাই ১৯৭৭
+qa-0229,gqa_hallu-0060,hallucinated,factualness,৪৪৮
+qa-0230,gqa_hallu-0056,hallucinated,factualness,ক্যান্সারের
+qa-0231,gqa_hallu-0024,hallucinated,comprehension,শ্যাজেল
+qa-0232,gqa_hallu-0008,hallucinated,comprehension,কৃষ্ণপান গঙ্গোপাধ্যায়
+qa-0233,gqa_hallu-0009,hallucinated,comprehension,১৩শ শতাব্দীতে
+qa-0234,gqa_hallu-0109,hallucinated,inference,১৩শ শতাব্দীতে
+qa-0235,gqa_hallu-0152,hallucinated,specificity,বার্নেট ফুটবল ক্লাবে
+qa-0236,gqa_hallu-0023,hallucinated,comprehension,খাদিজা বিনতে খুওয়াইলিদ
+qa-0237,gqa_hallu-0140,hallucinated,inference,সেন্ট পিটার্স হাই স্কুলে
+qa-0238,gqa_gold-0029,gold,gold,১১ টি
+qa-0239,gqa_gold-0047,gold,gold,পীর হজরত শাহ সৈয়দ আব্বাস আলী রাজী
+qa-0240,gqa_hallu-0174,hallucinated,specificity,শ্যাজেল
+qa-0241,gqa_hallu-0027,hallucinated,comprehension,ব্যাবিলনে
+qa-0242,gqa_hallu-0189,hallucinated,specificity,তাকিহিকো নাকাও
+qa-0243,gqa_hallu-0036,hallucinated,comprehension,৬
+qa-0244,gqa_hallu-0058,hallucinated,factualness,কৃষ্ণপান গঙ্গোপাধ্যায়
+qa-0245,gqa_hallu-0063,hallucinated,factualness,আস্ক
+qa-0246,gqa_hallu-0071,hallucinated,factualness,২০১৮
+qa-0247,gqa_hallu-0190,hallucinated,specificity,সেন্ট পিটার্স হাই স্কুলে
+qa-0248,gqa_hallu-0007,hallucinated,comprehension,১৯৭৯ সালের মে মাসে
+qa-0249,gqa_hallu-0029,hallucinated,comprehension,১১ টি
+qa-0250,gqa_hallu-0164,hallucinated,specificity,ধীরে বহে মেঘনা
