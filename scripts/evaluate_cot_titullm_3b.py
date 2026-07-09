@@ -132,8 +132,7 @@ class TituLLM:
         print(f"[titullm-cot] ready on {self.model.device}\n")
 
     @torch.no_grad()
-    def generate(self, prompt: str, max_new_tokens: int = 512,
-                 do_sample: bool = False, temperature: float = 0.0) -> str:
+    def generate(self, prompt: str, max_new_tokens: int = 512) -> str:
         # Two-step to stay compatible with both old and new `transformers`:
         # apply_chat_template can return BatchEncoding (dict-like) in >=4.44,
         # so we ask for text and tokenize explicitly.
@@ -142,14 +141,12 @@ class TituLLM:
             messages, add_generation_prompt=True, tokenize=False,
         )
         enc = self.tokenizer(prompt_text, return_tensors="pt").to(self.model.device)
-        gen_kwargs = dict(
+        out = self.model.generate(
+            **enc,
             max_new_tokens=max_new_tokens,
-            do_sample=do_sample,
+            do_sample=False,
             pad_token_id=self.tokenizer.eos_token_id,
         )
-        if do_sample:
-            gen_kwargs["temperature"] = max(temperature, 0.01)
-        out = self.model.generate(**enc, **gen_kwargs)
         gen = out[0][enc.input_ids.shape[-1]:]
         return self.tokenizer.decode(gen, skip_special_tokens=True).strip()
 
@@ -225,17 +222,8 @@ def run_task(task_key: str, llm: TituLLM, limit: Optional[int] = None) -> None:
         if write_header:
             w.writeheader()
         for k, (i, sid, r) in enumerate(pending, 1):
-            prompt = cfg["prompt"](r)
-            # Try 1: greedy decoding
-            raw = llm.generate(prompt, max_new_tokens=512, do_sample=False)
+            raw = llm.generate(cfg["prompt"](r), max_new_tokens=512)
             label = parse_cot_verdict(raw)
-            # Retry on unknown: sampling with rising temperature
-            for temp in (0.2, 0.5, 0.8):
-                if label in ("yes", "no"):
-                    break
-                raw = llm.generate(prompt, max_new_tokens=512,
-                                    do_sample=True, temperature=temp)
-                label = parse_cot_verdict(raw)
             out_row = {kk: r.get(kk, "") for kk in fieldnames if kk not in ("raw_response", "is_hallucinated")}
             out_row["raw_response"] = raw
             out_row["is_hallucinated"] = label
