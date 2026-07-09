@@ -168,6 +168,9 @@ class TituLLM:
     def __init__(self, model_id: str = DEFAULT_MODEL):
         print(f"[rerun] loading {model_id} in bfloat16 ...")
         self.tokenizer = AutoTokenizer.from_pretrained(model_id)
+        self.tokenizer.padding_side = "left"
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
         self.model = AutoModelForCausalLM.from_pretrained(
             model_id, torch_dtype=torch.bfloat16, device_map="auto",
         )
@@ -175,12 +178,15 @@ class TituLLM:
         print(f"[rerun] ready on {self.model.device}\n")
 
     @torch.no_grad()
-    def generate(self, prompt: str, max_new_tokens: int, temperature: float = 0.5) -> str:
-        messages = [{"role": "user", "content": prompt}]
-        prompt_text = self.tokenizer.apply_chat_template(
-            messages, add_generation_prompt=True, tokenize=False,
-        )
-        enc = self.tokenizer(prompt_text, return_tensors="pt",
+    def generate_batch(self, prompts: list[str], max_new_tokens: int, temperature: float = 0.5) -> list[str]:
+        prompt_texts = []
+        for prompt in prompts:
+            messages = [{"role": "user", "content": prompt}]
+            prompt_texts.append(self.tokenizer.apply_chat_template(
+                messages, add_generation_prompt=True, tokenize=False,
+            ))
+            
+        enc = self.tokenizer(prompt_texts, return_tensors="pt", padding=True,
                              truncation=True, max_length=8192).to(self.model.device)
         out = self.model.generate(
             **enc,
@@ -191,8 +197,12 @@ class TituLLM:
             repetition_penalty=1.05,
             pad_token_id=self.tokenizer.eos_token_id,
         )
-        gen = out[0][enc.input_ids.shape[-1]:]
-        return self.tokenizer.decode(gen, skip_special_tokens=True).strip()
+        input_len = enc.input_ids.shape[1]
+        results = []
+        for o in out:
+            gen = o[input_len:]
+            results.append(self.tokenizer.decode(gen, skip_special_tokens=True).strip())
+        return results
 
 
 def process_file(path: Path, llm: TituLLM, limit: Optional[int] = None) -> None:
@@ -231,30 +241,48 @@ def process_file(path: Path, llm: TituLLM, limit: Optional[int] = None) -> None:
     fixed = 0
     still_unk = 0
     t0 = time.time()
-    for k, idx in enumerate(unknowns, 1):
-        r = rows[idx]
-        prompt = handler["builder"](r)
+    batch_size = 16
+    for batch_start in range(0, len(unknowns), batch_size):
+        batch_idx = unknowns[batch_start:batch_start + batch_size]
+        batch = [rows[idx] for idx in batch_idx]
+        prompts = [handler["builder"](r) for r in batch]
         max_new = handler["max_tokens"]
-        raw = ""
-        label = "unknown"
+        
+        raws = [""] * len(batch)
+        labels = ["unknown"] * len(batch)
+        active_indices = list(range(len(batch)))
+        
         for attempt, temp in enumerate((0.5, 0.7, 0.9, 0.3), 1):
-            raw = llm.generate(prompt, max_new_tokens=max_new, temperature=temp)
-            label = parse_verdict(raw)
-            if label in ("yes", "no"):
+            if not active_indices:
                 break
-        if label in ("yes", "no"):
-            fixed += 1
-        else:
-            still_unk += 1
-        rows[idx]["raw_response"] = raw
-        rows[idx]["is_hallucinated"] = label
+                
+            active_prompts = [prompts[i] for i in active_indices]
+            active_raws = llm.generate_batch(active_prompts, max_new_tokens=max_new, temperature=temp)
+            
+            new_active_indices = []
+            for i, raw in zip(active_indices, active_raws):
+                label = parse_verdict(raw)
+                raws[i] = raw
+                labels[i] = label
+                if label not in ("yes", "no"):
+                    new_active_indices.append(i)
+            
+            active_indices = new_active_indices
 
-        if k % 20 == 0 or k == len(unknowns):
-            elapsed = time.time() - t0
-            rate = k / max(elapsed, 1e-6)
-            eta = (len(unknowns) - k) / max(rate, 1e-6)
-            print(f"  {k}/{len(unknowns)}   fixed={fixed}   still_unk={still_unk}   "
-                  f"rate={rate:.2f}/s   eta={eta/60:.1f}min")
+        for i, idx in enumerate(batch_idx):
+            if labels[i] in ("yes", "no"):
+                fixed += 1
+            else:
+                still_unk += 1
+            rows[idx]["raw_response"] = raws[i]
+            rows[idx]["is_hallucinated"] = labels[i]
+
+        k = min(batch_start + batch_size, len(unknowns))
+        elapsed = time.time() - t0
+        rate = k / max(elapsed, 1e-6)
+        eta = (len(unknowns) - k) / max(rate, 1e-6)
+        print(f"  {k}/{len(unknowns)}   fixed={fixed}   still_unk={still_unk}   "
+              f"rate={rate:.2f}/s   eta={eta/60:.1f}min")
 
     # Rewrite the file
     with open(path, "w", encoding="utf-8", newline="") as f:
