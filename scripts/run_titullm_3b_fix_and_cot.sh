@@ -6,7 +6,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."   # repo root
 
 # ── Adjust this to your RunPod Python ──
-PY="${PY:-$HOME/anaconda3/envs/attention/bin/python}"
+PY="${PY:-python3}"
 MODEL="${TITULLM_MODEL:-hishab/titulm-llama-3.2-3b-v1.1}"
 LOG_DIR="scripts/results_titullm_3b_logs"
 mkdir -p "$LOG_DIR"
