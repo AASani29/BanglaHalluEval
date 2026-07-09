@@ -125,6 +125,10 @@ class TituLLM:
     def __init__(self, model_id: str):
         print(f"[titullm-cot] loading {model_id} in bfloat16 ...")
         self.tokenizer = AutoTokenizer.from_pretrained(model_id)
+        self.tokenizer.padding_side = "left"
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
+
         self.model = AutoModelForCausalLM.from_pretrained(
             model_id, torch_dtype=torch.bfloat16, device_map="auto",
         )
@@ -132,23 +136,32 @@ class TituLLM:
         print(f"[titullm-cot] ready on {self.model.device}\n")
 
     @torch.no_grad()
-    def generate(self, prompt: str, max_new_tokens: int = 512) -> str:
-        # Two-step to stay compatible with both old and new `transformers`:
-        # apply_chat_template can return BatchEncoding (dict-like) in >=4.44,
-        # so we ask for text and tokenize explicitly.
-        messages = [{"role": "user", "content": prompt}]
-        prompt_text = self.tokenizer.apply_chat_template(
-            messages, add_generation_prompt=True, tokenize=False,
-        )
-        enc = self.tokenizer(prompt_text, return_tensors="pt").to(self.model.device)
+    def generate_batch(self, prompts: list[str], max_new_tokens: int = 512) -> list[str]:
+        prompt_texts = []
+        for prompt in prompts:
+            messages = [{"role": "user", "content": prompt}]
+            prompt_text = self.tokenizer.apply_chat_template(
+                messages, add_generation_prompt=True, tokenize=False,
+            )
+            prompt_texts.append(prompt_text)
+            
+        enc = self.tokenizer(
+            prompt_texts, return_tensors="pt", padding=True, truncation=True, max_length=2048
+        ).to(self.model.device)
+        
         out = self.model.generate(
             **enc,
             max_new_tokens=max_new_tokens,
             do_sample=False,
             pad_token_id=self.tokenizer.eos_token_id,
         )
-        gen = out[0][enc.input_ids.shape[-1]:]
-        return self.tokenizer.decode(gen, skip_special_tokens=True).strip()
+        
+        input_len = enc.input_ids.shape[1]
+        results = []
+        for o in out:
+            gen = o[input_len:]
+            results.append(self.tokenizer.decode(gen, skip_special_tokens=True).strip())
+        return results
 
 
 # Extract "yes"/"no" from a multi-line CoT response — prefer the last non-empty line.
@@ -217,23 +230,33 @@ def run_task(task_key: str, llm: TituLLM, limit: Optional[int] = None) -> None:
 
     write_header = (not out.exists()) or out.stat().st_size == 0
     t0 = time.time()
+    batch_size = 16  # using a decent batch size to speed things up
+    
     with open(out, "a", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fieldnames)
         if write_header:
             w.writeheader()
-        for k, (i, sid, r) in enumerate(pending, 1):
-            raw = llm.generate(cfg["prompt"](r), max_new_tokens=512)
-            label = parse_cot_verdict(raw)
-            out_row = {kk: r.get(kk, "") for kk in fieldnames if kk not in ("raw_response", "is_hallucinated")}
-            out_row["raw_response"] = raw
-            out_row["is_hallucinated"] = label
-            w.writerow(out_row)
+            
+        for batch_start in range(0, len(pending), batch_size):
+            batch = pending[batch_start:batch_start + batch_size]
+            prompts = [cfg["prompt"](r) for i, sid, r in batch]
+            
+            raws = llm.generate_batch(prompts, max_new_tokens=512)
+            
+            for (i, sid, r), raw in zip(batch, raws):
+                label = parse_cot_verdict(raw)
+                out_row = {kk: r.get(kk, "") for kk in fieldnames if kk not in ("raw_response", "is_hallucinated")}
+                out_row["raw_response"] = raw
+                out_row["is_hallucinated"] = label
+                w.writerow(out_row)
+            
             f.flush()
-            if k % 20 == 0 or k == len(pending):
-                elapsed = time.time() - t0
-                rate = k / max(elapsed, 1e-6)
-                eta = (len(pending) - k) / max(rate, 1e-6)
-                print(f"  [{SLUG}-cot] {task_key}  {k}/{len(pending)}  rate={rate:.2f}/s  eta={eta/60:.1f}min  last={label}")
+            k = min(batch_start + batch_size, len(pending))
+            elapsed = time.time() - t0
+            rate = k / max(elapsed, 1e-6)
+            eta = (len(pending) - k) / max(rate, 1e-6)
+            print(f"  [{SLUG}-cot] {task_key}  {k}/{len(pending)}  rate={rate:.2f}/s  eta={eta/60:.1f}min  last={label}")
+            
     print(f"  [{SLUG}-cot] {task_key} -> {out.relative_to(ROOT)}\n")
 
 

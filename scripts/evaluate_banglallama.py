@@ -103,6 +103,7 @@ def load_model(quantize: bool = True):
             MODEL_ID,
             quantization_config=bnb_config,
             device_map="auto",
+            torch_dtype=torch.bfloat16,
         )
     else:
         model = AutoModelForCausalLM.from_pretrained(
