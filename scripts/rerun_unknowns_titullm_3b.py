@@ -187,7 +187,7 @@ class TituLLM:
             ))
             
         enc = self.tokenizer(prompt_texts, return_tensors="pt", padding=True,
-                             truncation=True, max_length=8192).to(self.model.device)
+                             truncation=True, max_length=2048).to(self.model.device)
         out = self.model.generate(
             **enc,
             max_new_tokens=max_new_tokens,
@@ -241,7 +241,7 @@ def process_file(path: Path, llm: TituLLM, limit: Optional[int] = None) -> None:
     fixed = 0
     still_unk = 0
     t0 = time.time()
-    batch_size = 16
+    batch_size = 4
     for batch_start in range(0, len(unknowns), batch_size):
         batch_idx = unknowns[batch_start:batch_start + batch_size]
         batch = [rows[idx] for idx in batch_idx]
