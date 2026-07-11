@@ -24,3 +24,12 @@ coverage.xml
 gemma_answers_bengali.csv
 log.txt
 output.log
+
+# --- Private human-annotation data: keep annotator responses & IAA results off GitHub ---
+# Matched by folder name so they stay ignored regardless of the parent dir
+# (whether it is annotation/ or annotation_samples/).
+Annotator*Response*/
+Rechecked Annotations/
+iaa_fleiss/
+adjudication/
+ai_silver_annotations/
