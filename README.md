@@ -16,6 +16,7 @@ A hallucination evaluation benchmark for Bengali (Bangla) language models, cover
 - [Judge Models](#judge-models)
 - [Evaluation Prompts](#evaluation-prompts)
 - [Chain-of-Thought (CoT) Evaluation](#chain-of-thought-cot-evaluation)
+- [Annotation Quality and Human Validation](#annotation-quality-and-human-validation)
 - [Repository Structure](#repository-structure)
 - [Setup](#setup)
 
@@ -316,6 +317,39 @@ Respond ONLY with a JSON object on the last line:
 CoT models: `qwen2.5:32b-instruct`, `gemma2:27b`, `mistral-nemo:latest`, `llama3.1:8b`
 
 CoT output files follow the naming pattern `*_cot_{model_slug}.csv`.
+
+---
+
+## Annotation Quality and Human Validation
+
+To validate the benchmark, **three annotators independently labelled a blind, stratified sample**
+across all tasks. Annotators saw only the item to be judged (context or document or problem, and the
+candidate output), were not told whether an item came from the gold or the hallucinated split, and did
+not confer on individual items during labelling.
+
+**Annotator criteria.** The complete, task-by-task instructions given to the annotators (definitions,
+labeling rules, worked examples, and common pitfalls) are in
+[annotation/guidelines/BanHalluEval_Annotation_Guidelines.md](annotation/guidelines/BanHalluEval_Annotation_Guidelines.md).
+
+**Inter-annotator agreement.** Fleiss' kappa across the three annotators, together with two exact
+agreement rates: the exact agreement and the share of items on which all three annotators
+agreed unanimously. Figures below reflect a recheck of the annotation process.
+
+| Task | Items | Fleiss' κ | Exact agreement | Unanimous |
+|------|:----:|:----:|:----:|:----:|
+| GQA | 250 (241 scored)* | 0.918 | 97.2% | 95.9% |
+| Code-mixed QA | 250 | 0.914 | 98.4% | 97.6% |
+| Summarization | 200 | 0.926 | 97.3% | 96.0% |
+| Reasoning | 300 | 0.911 | 97.3% | 96.0% |
+| QA-model outputs | 150 | 0.568 | 82.7% | 74.0% |
+
+\*9 items excluded because one annotator skipped them.
+
+Under the Landis and Koch scale, GQA, Code-mixed QA, Summarization, and Reasoning all reach **almost
+perfect** agreement (0.911 to 0.926) after the recheck; QA-model outputs (0.568) remains in the
+**moderate** range. Per-item agreement tables (each annotator's label, the majority label,
+unanimity, per-item agreement, and the overall kappa) are produced for every task by the annotation
+pipeline.
 
 ---
 
