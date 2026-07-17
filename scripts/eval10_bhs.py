@@ -11,13 +11,13 @@ Metric definitions (identical to scripts/extract_baseline_metrics.py):
     BHS   = 0.5 * (A-err + B-err)      lower is better
 
 Reads:
-    10pct Sampled Evaluations/10pct_baseline_<model>/<task>_gt.csv    (expected=no)
-    10pct Sampled Evaluations/10pct_baseline_<model>/<task>_hallu.csv (expected=yes)
-    10pct Sampled Evaluations/10pct_cot_<model>/<task>_gt_cot.csv
-    10pct Sampled Evaluations/10pct_cot_<model>/<task>_hallu_cot.csv
+    T Sampled Evaluations/T_baseline_<model>/<task>_gt.csv    (expected=no)
+    T Sampled Evaluations/T_baseline_<model>/<task>_hallu.csv (expected=yes)
+    T Sampled Evaluations/T_cot_<model>/<task>_gt_cot.csv
+    T Sampled Evaluations/T_cot_<model>/<task>_hallu_cot.csv
 
 Writes:
-    10pct Sampled Evaluations/10pct_bhs.csv
+    T Sampled Evaluations/T_bhs.csv
     also prints a compact table.
 """
 
@@ -28,7 +28,7 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT_FILE = ROOT / "10pct Sampled Evaluations" / "10pct_bhs.csv"
+OUT_FILE = ROOT / "T Sampled Evaluations" / "T_bhs.csv"
 
 MODELS = ["banglallama", "titullm"]
 BASELINE_TASKS = ["gqa", "summ", "reason", "codemix"]
@@ -73,7 +73,7 @@ def main() -> None:
     rows = []
     for model in MODELS:
         for mode, tasks in (("baseline", BASELINE_TASKS), ("cot", COT_TASKS)):
-            d = ROOT / "10pct Sampled Evaluations" / f"10pct_{mode}_{model}"
+            d = ROOT / "T Sampled Evaluations" / f"T_{mode}_{model}"
             suffix = "_cot" if mode == "cot" else ""
             for task in tasks:
                 gt_path    = d / f"{task}_gt{suffix}.csv"

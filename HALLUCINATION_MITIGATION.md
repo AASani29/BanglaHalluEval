@@ -130,7 +130,7 @@ Respond ONLY with a JSON object on the last line: {{"is_hallucinated": "Yes"}} o
 - Judge scripts: `scripts/evaluate_cot_ollama.py`, `scripts/evaluate_cot_gpt4_1_mini.py`, `scripts/evaluate_cot_tigerllm.py`
 - Aggregation: `scripts/extract_cot_metrics.py`
 - Results: `QA/Results/qa_cot_*.csv`, `Summarization/Results/summ_*_cot_*.csv`, `Reasoning/Results/reasoning_cot_*.csv`
-- Metrics table: `10pct Sampled Evaluations/cot_per_model_metrics.csv`
+- Metrics table: `T Sampled Evaluations/cot_per_model_metrics.csv`
 
 **Findings:** Mixed. Improved Summarization on most judges but broke GQA on most judges. This regression is the primary motivation for E-CoT.
 
@@ -272,7 +272,7 @@ BanglaHalluEval/
 ├── Evaluation/                              baseline judge outputs (QA/Reasoning, GPT-4.1-mini/LLaMA)
 ├── QA/Results/, Codemix/Results/            baseline judge outputs (per task)
 ├── QA/Results/, Summarization/Results/, Reasoning/Results/   CoT judge outputs
-├── 10pct Sampled Evaluations/               baseline_metrics.csv, cot_per_model_metrics.csv (10%-sample TituLLM/BanglaLLaMA baseline+CoT runs)
+├── T Sampled Evaluations/                   baseline_metrics.csv, cot_per_model_metrics.csv (10%-sample TituLLM/BanglaLLaMA baseline+CoT runs)
 │
 ├── pilot_50_samples/                       E-CoT pilot (300 samples, GPT-4.1 mini)
 │   ├── ECOT_PILOT_REPORT.md                     pilot report (design, results, next-steps)

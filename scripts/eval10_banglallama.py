@@ -47,8 +47,8 @@ from eval10_common import (
 MODEL_ID = "BanglaLLM/bangla-llama-13b-instruct-v0.1"
 BATCH_SIZE = 4
 COT_MAX_NEW = 400
-OUT_BASE = ROOT / "10pct Sampled Evaluations" / "10pct_baseline_banglallama"
-OUT_COT  = ROOT / "10pct Sampled Evaluations" / "10pct_cot_banglallama"
+OUT_BASE = ROOT / "T Sampled Evaluations" / "T_baseline_banglallama"
+OUT_COT  = ROOT / "T Sampled Evaluations" / "T_cot_banglallama"
 
 
 # ─────────────────────────────────────────────────────────────────────────────

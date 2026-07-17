@@ -419,7 +419,7 @@ BanglaHalluEval/
 │   └── legacy/                            # Superseded single-machine TigerLLM scripts, kept for history
 │
 ├── Evaluation/                            # GPT-4.1-mini/LLaMA baseline results (QA + Reasoning)
-├── 10pct Sampled Evaluations/              # 10%-sample baseline+CoT runs (BanglaLLaMA/TituLLM comparison)
+├── T Sampled Evaluations/                  # 10%-sample baseline+CoT runs (BanglaLLaMA/TituLLM comparison)
 ├── full_ecot_run/, pilot_50_samples/       # E-CoT hallucination-mitigation pipeline (see HALLUCINATION_MITIGATION.md)
 ├── annotation/guidelines/                  # Human-annotation instructions
 ├── public/halueval.pdf                    # Reference paper (Li et al., HaluEval)
