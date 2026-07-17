@@ -6,8 +6,8 @@ step-by-step before giving its final verdict. Results are saved to separate
 _cot_ files so they can be compared against the baseline.
 
 Tasks:
-  summ_hallu   → Summarization/Evaluation_Results/summ_3000_cot_{model}.csv
-  summ_gt      → Summarization/Evaluation_Results/summ_1000_cot_{model}.csv
+  summ_hallu   → Summarization/Results/summ_3000_cot_{model}.csv
+  summ_gt      → Summarization/Results/summ_1000_cot_{model}.csv
   reason_hallu → Reasoning/Results/reasoning_cot_{model}.csv
   reason_gt    → Reasoning/Results/reasoning_gt_cot_{model}.csv
 
@@ -376,7 +376,7 @@ def get_tasks(model: str, slug: str, base_url: str, concurrency: int = 1) -> dic
         # is evaluated once per question (1000 rows), matching the existing
         # llama/mistral qa_gt files — NOT the full 4000-row per-aspect file.
         "qa_gt": lambda: run_csv_task(
-            "QA/qa_gt_1000.csv",
+            "BanglaHalluEval Datasets/banglahallueval_qa_1000.csv",
             f"QA/Results/qa_cot_gt_{slug}.csv",
             lambda r: QA_COT_PROMPT.format(
                 question=r.get("question", ""),
@@ -387,7 +387,7 @@ def get_tasks(model: str, slug: str, base_url: str, concurrency: int = 1) -> dic
         ),
         "summ_hallu": lambda: run_csv_task(
             "Hallucination Generated Answers/summarization_3000_corrected.csv",
-            f"Summarization/Evaluation_Results/summ_3000_cot_{slug}.csv",
+            f"Summarization/Results/summ_3000_cot_{slug}.csv",
             lambda r: SUMM_COT_PROMPT.format(
                 document=r.get("document", "") or r.get("question", ""),
                 summary=r.get("hallucinated_summary", "") or r.get("summary", ""),
@@ -397,7 +397,7 @@ def get_tasks(model: str, slug: str, base_url: str, concurrency: int = 1) -> dic
         ),
         "summ_gt": lambda: run_csv_task(
             "Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv",
-            f"Summarization/Evaluation_Results/summ_1000_cot_{slug}.csv",
+            f"Summarization/Results/summ_1000_cot_{slug}.csv",
             lambda r: SUMM_COT_PROMPT.format(
                 document=r.get("question", ""),
                 summary=r.get("summary", ""),
@@ -406,7 +406,7 @@ def get_tasks(model: str, slug: str, base_url: str, concurrency: int = 1) -> dic
             model, base_url, num_predict=npred, num_ctx=nctx, concurrency=concurrency,
         ),
         "reason_hallu": lambda: run_reasoning_task(
-            "Reasoning/1000_hallucinated Samples/somadhan_1000_hallucinated.csv",
+            "Hallucination Generated Answers/reasoning_1000.csv",
             f"Reasoning/Results/reasoning_cot_{slug}.csv",
             is_groundtruth=False,
             model=model, base_url=base_url, num_predict=npred, num_ctx=nctx,

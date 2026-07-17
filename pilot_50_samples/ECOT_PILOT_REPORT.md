@@ -58,9 +58,9 @@ The BenHalluEval data files already carry the gold evidence inline — no retrie
 
 | Task | Track A file | Track B file | Evidence field | Candidate field |
 |---|---|---|---|---|
-| QA | `benhallueval_qa_gt_1000.csv` | `qa_4000.csv` | `context` (TyDiQA-GoldP passage) | `correct_answer` (A) / `hallucinated_answer` (B) |
-| Summarization | `benhallueval_summarization_gt_1000.csv` | `summarization_3000.csv` | `question` (A) / `document` (B) — source query | `summary` (A) / `hallucinated_summary` (B) |
-| Reasoning | `benhallueval_reasoning_gt_1000.csv` | `reasoning_1000.csv` | `answer` (gold SOMADHAN CoT) | `answer` (A) / `hallucinated_chain` (B) |
+| QA | `BanglaHalluEval Datasets/banglahallueval_qa_1000.csv` | `qa_4000.csv` | `context` (TyDiQA-GoldP passage) | `correct_answer` (A) / `hallucinated_answer` (B) |
+| Summarization | `Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv` | `summarization_3000_corrected.csv` | `question` (A) / `document` (B) — source query | `summary` (A) / `hallucinated_summary` (B) |
+| Reasoning | `Reasoning/1000 Selected Samples/somadhan_1000_main_ordered.csv` | `reasoning_1000.csv` | `answer` (gold SOMADHAN CoT) | `answer` (A) / `hallucinated_chain` (B) |
 
 ---
 

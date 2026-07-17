@@ -91,7 +91,7 @@ Bengali mathematical word problems drawn from the **SOMADHAN** dataset. A halluc
 | Property | Detail |
 |---|---|
 | Language | Bengali (full Unicode) |
-| Source dataset | SOMADHAN (`SOMADHAN.csv`) |
+| Source dataset | SOMADHAN (`Reasoning/SOMADHAN Source Dataset/SOMADHAN.csv`) |
 | Dataset (candidates) | `Hallucination Generated Answers/reasoning_1000.csv` — 1,000 samples |
 | Dataset (main/ground-truth) | `Reasoning/1000 Selected Samples/somadhan_1000_main_ordered.csv` — 1,000 samples |
 | Hallucination types | `arithmetic_slip`, `wrong_formula`, `wrong_unit`, etc. |
@@ -122,7 +122,7 @@ QA over code-switched Bangla–English text (Romanised Bengali mixed with Englis
 |---|---|
 | Language | Code-mixed Bangla–English (Romanised) |
 | Dataset (candidates) | `Hallucination Generated Answers/codemix_4000.csv` — 4,000 samples |
-| Dataset (main/ground-truth) | `Codemix/Main dataset/` — 1,000 samples |
+| Dataset (main/ground-truth) | `Codemix/Main dataset/codemix_1000.csv` — 1,000 samples |
 | Hallucination patterns | `factualness`, `comprehension` |
 
 **CSV columns:**
@@ -329,7 +329,7 @@ not confer on individual items during labelling.
 
 **Annotator criteria.** The complete, task-by-task instructions given to the annotators (definitions,
 labeling rules, worked examples, and common pitfalls) are in
-[annotation/guidelines/BanHalluEval_Annotation_Guidelines.md](annotation/guidelines/BanHalluEval_Annotation_Guidelines.md).
+[annotation/guidelines/BanHalluEval_Annotation_Guidelines.pdf](annotation/guidelines/BanHalluEval_Annotation_Guidelines.pdf).
 
 **Inter-annotator agreement.** Fleiss' kappa across the three annotators, together with two exact
 agreement rates: the exact agreement and the share of items on which all three annotators
@@ -355,35 +355,47 @@ pipeline.
 
 ## Repository Structure
 
+Each task's data lives inside that task's own top-level folder — there is no shared catch-all
+"Results" or "Datasets" folder anymore (an earlier version of this repo had CSVs scattered across
+several overlapping locations; they've since been consolidated to one canonical copy per dataset).
+
 ```
 BanglaHalluEval/
 │
-├── Hallucination Generated Answers/       # Raw hallucinated outputs (input to Stage 2)
+├── Hallucination Generated Answers/       # Raw hallucinated outputs (input to Stage 2), one file per task
 │   ├── qa_4000.csv
 │   ├── summarization_3000_corrected.csv
 │   ├── reasoning_1000.csv
 │   └── codemix_4000.csv
 │
-├── BanglaHalluEval Datasets/              # Final curated 1000-sample main datasets
-│   ├── banglahallueval_qa_1000.csv
-│   └── banglahallueval_qa_dataset_1000.csv
+├── BanglaHalluEval Datasets/              # Final curated 1000-sample QA ground-truth dataset
+│   └── banglahallueval_qa_1000.csv
 │
 ├── QA/
-│   └── Results/                           # QA evaluation output CSVs
+│   └── Results/                           # QA evaluation/labeling output CSVs
 │
 ├── Summarization/
-│   ├── 1000 Selected Samples/
-│   └── Evaluation_Results/
+│   ├── 1000 Selected Samples/             # Final curated 1000-sample summarization ground truth
+│   ├── 3000 Candidate Answers/
+│   └── Results/                           # Summarization evaluation/labeling output CSVs
 │
 ├── Reasoning/
-│   ├── 1000 Selected Samples/
-│   ├── 1000_hallucinated Samples/
-│   └── Results/
+│   ├── SOMADHAN Source Dataset/           # Raw SOMADHAN.csv -> length-sorted -> extreme-sample exploration
+│   │   ├── SOMADHAN.csv
+│   │   ├── SOMADHAN_SORTED.csv
+│   │   ├── sort_dataset.py
+│   │   └── create_extreme_samples.py
+│   ├── 1000 Selected Samples/             # Final curated 1000-sample reasoning ground truth
+│   ├── Evaluation Script/
+│   └── Results/                           # Reasoning evaluation/labeling output CSVs
 │
 ├── Codemix/
-│   ├── Main dataset/
-│   ├── Results/
+│   ├── Main dataset/                      # Final curated 1000-sample codemix ground truth
+│   ├── Results/                           # Codemix evaluation/labeling output CSVs
 │   └── label_codemix_*_ollama.py          # Per-model Codemix labeling scripts
+│
+├── Sample Selection for QA/                # QA candidate-pool + selection stage (pre-dates the final 1000)
+├── Sample Selection for Summ/              # Summarization candidate-pool + selection stage
 │
 ├── scripts/                               # All evaluation and labeling scripts
 │   ├── label_hallucinations_ollama.py     # QA — Ollama judge
@@ -403,11 +415,14 @@ BanglaHalluEval/
 │   ├── evaluate_codemix_deepseek_candidates.py
 │   ├── evaluate_codemix_deepseek_main.py
 │   ├── evaluate_reasoning_deepseek_candidates.py
-│   └── evaluate_reasoning_deepseek_main.py
+│   ├── evaluate_reasoning_deepseek_main.py
+│   └── legacy/                            # Superseded single-machine TigerLLM scripts, kept for history
 │
-├── Results/                               # Aggregated labeled output CSVs
-├── Evaluation/                            # GPT/LLaMA labeled QA results
-├── public/halueval.pdf                    # Reference paper
+├── Evaluation/                            # GPT-4.1-mini/LLaMA baseline results (QA + Reasoning)
+├── 10pct Sampled Evaluations/              # 10%-sample baseline+CoT runs (BanglaLLaMA/TituLLM comparison)
+├── full_ecot_run/, pilot_50_samples/       # E-CoT hallucination-mitigation pipeline (see HALLUCINATION_MITIGATION.md)
+├── annotation/guidelines/                  # Human-annotation instructions
+├── public/halueval.pdf                    # Reference paper (Li et al., HaluEval)
 ├── requirements.txt
 └── README.md
 ```
@@ -451,7 +466,7 @@ python scripts/label_hallucinations_gpt.py \
 # Summarization — Qwen 32B via Ollama
 python scripts/label_summarization_ollama.py \
   --input "Hallucination Generated Answers/summarization_3000_corrected.csv" \
-  --output "Summarization/Evaluation_Results/summ_3000_qwen32b.csv" \
+  --output "Summarization/Results/summ_3000_qwen32b.csv" \
   --model qwen2.5:32b-instruct
 
 # Reasoning — GPT-4.1 mini
@@ -462,7 +477,7 @@ python scripts/label_reasoning_gpt_4_1_mini.py \
 # Codemix — GPT-4.1 mini
 python scripts/label_codemix_hallucinations_gpt_4_1_mini.py \
   --input "Hallucination Generated Answers/codemix_4000.csv" \
-  --output "Results/codemix_4000_gpt4mini.csv"
+  --output "Codemix/Results/codemix_4000_gpt4mini.csv"
 
 # TigerLLM — all tasks (requires local GPU)
 python scripts/evaluate_tigerllm.py --task all

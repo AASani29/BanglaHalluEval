@@ -43,7 +43,7 @@ SOURCES: Dict[str, Tuple[str, int]] = {
     "qa":            ("Hallucination Generated Answers/qa_4000.csv", 400),
     "summ_3000":     ("Hallucination Generated Answers/summarization_3000_corrected.csv", 300),
     "summ_1000":     ("Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv", 100),
-    "reason_hallu":  ("Reasoning/1000_hallucinated Samples/somadhan_1000_hallucinated.csv", 100),
+    "reason_hallu":  ("Hallucination Generated Answers/reasoning_1000.csv", 100),
     "reason_gt":     ("Reasoning/1000 Selected Samples/somadhan_1000_main_ordered.csv", 100),
     "codemix":       ("Hallucination Generated Answers/codemix_4000_gpt4_1_mini_labeled.csv", 400),
 }

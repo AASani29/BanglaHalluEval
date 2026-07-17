@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 def prepare_dataset():
     print("Loading data...")
-    df = pd.read_csv('Reasoning/1000_hallucinated Samples/somadhan_1000_hallucinated.csv')
+    df = pd.read_csv('Hallucination Generated Answers/reasoning_1000.csv')
     df = df[['id', 'question', 'hallucinated_chain', 'hallucinated_answer']]
     
     # Load checkpoint if it exists

@@ -96,8 +96,8 @@ At the repo root. The Ollama and TigerLLM scripts don't need it.
 
 ### 4.1 Sanity-check the data files exist
 ```bash
-ls "BenHalluEval Ground Truth Datasets"/*1000.csv
-ls "Hallucination Generated Answers"/{qa_4000.csv,summarization_3000.csv,reasoning_1000.csv}
+ls "BanglaHalluEval Datasets/banglahallueval_qa_1000.csv" "Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv" "Reasoning/1000 Selected Samples/somadhan_1000_main_ordered.csv"
+ls "Hallucination Generated Answers"/{qa_4000.csv,summarization_3000_corrected.csv,reasoning_1000.csv}
 ```
 
 ### 4.2 Quick smoke test — 1 row per task, 1 judge

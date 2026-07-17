@@ -3,7 +3,7 @@
 
 Input columns: id, question (document), summary
 Models: qwen2.5:32b-instruct, gemma2:27b, llama3.1:8b, mistral-nemo:latest
-Each model writes its own output file under Summarization/Evaluation_Results/.
+Each model writes its own output file under Summarization/Results/.
 
 Usage:
     python scripts/label_summarization_1000_four_models.py \
@@ -166,7 +166,7 @@ def main() -> None:
     p.add_argument("--input", required=True, help="Input CSV path")
     p.add_argument(
         "--output-dir",
-        default="Summarization/Evaluation_Results",
+        default="Summarization/Results",
         help="Directory to save per-model output CSVs",
     )
     p.add_argument(

@@ -7,8 +7,8 @@ API key is read from the .env file in the project root (OPENAI_API_KEY).
 Tasks:
   qa_hallu    → QA/Results/qa_cot_hallu_gpt4_1_mini.csv          (4 000 rows)
   qa_gt       → QA/Results/qa_cot_gt_gpt4_1_mini.csv             (1 000 rows)
-  summ_hallu  → Summarization/Evaluation_Results/summ_3000_cot_gpt4_1_mini.csv
-  summ_gt     → Summarization/Evaluation_Results/summ_1000_cot_gpt4_1_mini.csv
+  summ_hallu  → Summarization/Results/summ_3000_cot_gpt4_1_mini.csv
+  summ_gt     → Summarization/Results/summ_1000_cot_gpt4_1_mini.csv
   reason_hallu→ Reasoning/Results/reasoning_cot_gpt4_1_mini.csv  (1 000 rows)
   reason_gt   → Reasoning/Results/reasoning_gt_cot_gpt4_1_mini.csv
 
@@ -334,7 +334,7 @@ def get_tasks(client: OpenAI) -> dict:
             client,
         ),
         "qa_gt": lambda: run_csv_task(
-            "QA/qa_gt_1000.csv",
+            "BanglaHalluEval Datasets/banglahallueval_qa_1000.csv",
             f"QA/Results/qa_cot_gt_{SLUG}.csv",
             lambda r: QA_COT_PROMPT.format(
                 question=r.get("question", ""),
@@ -345,7 +345,7 @@ def get_tasks(client: OpenAI) -> dict:
         ),
         "summ_hallu": lambda: run_csv_task(
             "Hallucination Generated Answers/summarization_3000_corrected.csv",
-            f"Summarization/Evaluation_Results/summ_3000_cot_{SLUG}.csv",
+            f"Summarization/Results/summ_3000_cot_{SLUG}.csv",
             lambda r: SUMM_COT_PROMPT.format(
                 document=r.get("document", "") or r.get("question", ""),
                 summary=r.get("hallucinated_summary", "") or r.get("summary", ""),
@@ -355,7 +355,7 @@ def get_tasks(client: OpenAI) -> dict:
         ),
         "summ_gt": lambda: run_csv_task(
             "Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv",
-            f"Summarization/Evaluation_Results/summ_1000_cot_{SLUG}.csv",
+            f"Summarization/Results/summ_1000_cot_{SLUG}.csv",
             lambda r: SUMM_COT_PROMPT.format(
                 document=r.get("question", ""),
                 summary=r.get("summary", ""),
@@ -364,7 +364,7 @@ def get_tasks(client: OpenAI) -> dict:
             client,
         ),
         "reason_hallu": lambda: run_reasoning_task(
-            "Reasoning/1000_hallucinated Samples/somadhan_1000_hallucinated.csv",
+            "Hallucination Generated Answers/reasoning_1000.csv",
             f"Reasoning/Results/reasoning_cot_{SLUG}.csv",
             is_groundtruth=False,
             client=client,

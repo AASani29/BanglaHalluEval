@@ -27,7 +27,7 @@
 
 | Phase | What was tried | Status | Headline outcome | Where to look |
 |---|---|---|---|---|
-| **Baseline** | Ask each of 7 judges a closed-book "is this hallucinated? Yes/No" | Complete on full benchmark | Mean BHS ≈ 40% across judges — leaves a lot on the table | `scripts/label_correct_answers_gpt_4_1_mini.py`, `Evaluation/*.csv`, `Results/*.csv` |
+| **Baseline** | Ask each of 7 judges a closed-book "is this hallucinated? Yes/No" | Complete on full benchmark | Mean BHS ≈ 40% across judges — leaves a lot on the table | `scripts/label_correct_answers_gpt_4_1_mini.py`, `Evaluation/*.csv`, `*/Results/*.csv` |
 | **CoT mitigation** | Add "Analyse step by step" reasoning trace before the Yes/No | Complete on full benchmark | Mixed: helps DeepSeek + GPT-4.1 mini on some tasks; **regresses GQA and LLaMA-3.1-8B badly** | `scripts/evaluate_cot_ollama.py`, `scripts/evaluate_cot_gpt4_1_mini.py`, `scripts/evaluate_cot_tigerllm.py`, `*/Results/*_cot_*.csv`, `scripts/extract_cot_metrics.py` |
 | **E-CoT (Variant C)** | Add gold evidence + atomic-claim decomposition + word-for-word citations + task-aware verdict aggregation | **Pilot complete (300 samples)**; full-benchmark run pending on 7 judges | Mean pilot BHS **20.33% → 12.00% on GPT-4.1 mini** (–41% relative) | `pilot_50_samples/`, `full_ecot_run/` |
 
@@ -79,7 +79,7 @@ Answer now:
 **Key files:**
 - Judge scripts: `scripts/label_*.py`, `scripts/evaluate_tigerllm*.py`
 - Aggregation: `scripts/extract_baseline_metrics.py`
-- Results: `Evaluation/qa_*.csv`, `Results/summarization_*.csv`, `Results/reasoning_*.csv` (each with column `is_hallucinated ∈ {yes, no}`)
+- Results: `Evaluation/qa_*.csv`, `Summarization/Results/summarization_*.csv`, `Reasoning/Results/reasoning_*.csv` (each with column `is_hallucinated ∈ {yes, no}`)
 
 **Findings:** Recorded in the "Before CoT" columns of the paper's main table. Judges with weak Bengali knowledge (e.g., LLaMA-3.1-8B) have high B-err (many missed hallucinations). Strong reasoning judges (GPT-4.1 mini) have modest BHS but still leave headroom.
 
@@ -129,8 +129,8 @@ Respond ONLY with a JSON object on the last line: {{"is_hallucinated": "Yes"}} o
 **Key files:**
 - Judge scripts: `scripts/evaluate_cot_ollama.py`, `scripts/evaluate_cot_gpt4_1_mini.py`, `scripts/evaluate_cot_tigerllm.py`
 - Aggregation: `scripts/extract_cot_metrics.py`
-- Results: `QA/Results/qa_cot_*.csv`, `Summarization/Evaluation_Results/summ_*_cot_*.csv`, `Reasoning/Results/reasoning_cot_*.csv`
-- Metrics table: `Evaluations/cot_per_model_metrics.csv`
+- Results: `QA/Results/qa_cot_*.csv`, `Summarization/Results/summ_*_cot_*.csv`, `Reasoning/Results/reasoning_cot_*.csv`
+- Metrics table: `10pct Sampled Evaluations/cot_per_model_metrics.csv`
 
 **Findings:** Mixed. Improved Summarization on most judges but broke GQA on most judges. This regression is the primary motivation for E-CoT.
 
@@ -255,7 +255,9 @@ BanglaHalluEval/
 ├── HALLUCINATION_MITIGATION.md            ← THIS FILE — project-wide overview
 ├── .env                                    OPENAI_API_KEY (gitignored)
 │
-├── BenHalluEval Ground Truth Datasets/     Track A source data
+├── (Track A / ground-truth source data now lives per-task: BanglaHalluEval Datasets/,
+│    Summarization/1000 Selected Samples/, Reasoning/1000 Selected Samples/,
+│    Codemix/Main dataset/ — see each task's README section)
 ├── Hallucination Generated Answers/        Track B source data (hallucinated candidates)
 │
 ├── scripts/                                Baseline + CoT scripts (original pipeline)
@@ -267,9 +269,10 @@ BanglaHalluEval/
 │   ├── extract_baseline_metrics.py              baseline BHS aggregator
 │   └── extract_cot_metrics.py                   CoT BHS aggregator
 │
-├── Evaluation/, Results/                   baseline judge outputs
-├── QA/Results/, Summarization/Evaluation_Results/, Reasoning/Results/   CoT judge outputs
-├── Evaluations/                            baseline_metrics.csv, cot_per_model_metrics.csv
+├── Evaluation/                              baseline judge outputs (QA/Reasoning, GPT-4.1-mini/LLaMA)
+├── QA/Results/, Codemix/Results/            baseline judge outputs (per task)
+├── QA/Results/, Summarization/Results/, Reasoning/Results/   CoT judge outputs
+├── 10pct Sampled Evaluations/               baseline_metrics.csv, cot_per_model_metrics.csv (10%-sample TituLLM/BanglaLLaMA baseline+CoT runs)
 │
 ├── pilot_50_samples/                       E-CoT pilot (300 samples, GPT-4.1 mini)
 │   ├── ECOT_PILOT_REPORT.md                     pilot report (design, results, next-steps)

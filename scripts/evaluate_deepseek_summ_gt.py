@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Evaluate ground truth summaries using deepseek-r1:14b via Ollama.
 
-Input:  Sample Selection for Summ/banglahallueval_summarization_dataset_1000.csv
-Output: Summarization/Evaluation_Results/summ_gt_1000_deepseek.csv
+Input:  Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv
+Output: Summarization/Results/summ_gt_1000_deepseek.csv
 
 Columns: id, question (document), summary (ground truth)
 Expected result: mostly "no" (ground truth summaries should not be hallucinated)
@@ -25,8 +25,8 @@ MODEL = "deepseek-r1:14b"
 
 MAX_DOC_CHARS = 3500  # Bengali ≈ 2 tokens/char → 3500 chars ≈ 7000 tokens, safe under 16384 num_ctx
 
-INPUT_FILE  = "Sample Selection for Summ/banglahallueval_summarization_dataset_1000.csv"
-OUTPUT_FILE = "Summarization/Evaluation_Results/summ_gt_1000_deepseek.csv"
+INPUT_FILE  = "Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv"
+OUTPUT_FILE = "Summarization/Results/summ_gt_1000_deepseek.csv"
 
 SUMM_PROMPT = (
     "You are an evaluator.\n"

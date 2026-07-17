@@ -161,7 +161,7 @@ print("=" * 78)
 print("E1  Does NLI entailment detect hallucination?  (labels known by construction)")
 print("=" * 78, flush=True)
 
-gold = load("BenHalluEval Ground Truth Datasets/benhallueval_summarization_gt_1000.csv")
+gold = load("Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv")
 hallu = load("Hallucination Generated Answers/summarization_3000_corrected.csv")
 
 if ARGS.limit:

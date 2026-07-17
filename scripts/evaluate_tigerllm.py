@@ -3,8 +3,8 @@
 
 Saves results to:
   QA         → QA/Results/qa_4000_labeled_tigerllm.csv
-  Summarization (3000) → Summarization/Evaluation_Results/summarization_3000_corrected_labeled_tigerllm.csv
-  Summarization (1000) → Summarization/Evaluation_Results/summarization_1000_labeled_tigerllm.csv
+  Summarization (3000) → Summarization/Results/summarization_3000_corrected_labeled_tigerllm.csv
+  Summarization (1000) → Summarization/Results/summarization_1000_labeled_tigerllm.csv
   Reasoning (hallucinated) → Reasoning/Results/reasoning_evaluation_scored_tigerllm.csv
   Reasoning (ground truth) → Reasoning/Results/reasoning_evaluation_scored_groundtruth_tigerllm.csv
 
@@ -284,16 +284,16 @@ TASKS = {
     "qa": lambda tok, mod, resume: run_qa(tok, mod, resume),
     "summ3000": lambda tok, mod, resume: run_summ(
         "Hallucination Generated Answers/summarization_3000_corrected.csv",
-        "Summarization/Evaluation_Results/summarization_3000_corrected_labeled_tigerllm.csv",
+        "Summarization/Results/summarization_3000_corrected_labeled_tigerllm.csv",
         tok, mod, resume,
     ),
     "summ1000": lambda tok, mod, resume: run_summ(
         "Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv",
-        "Summarization/Evaluation_Results/summarization_1000_labeled_tigerllm.csv",
+        "Summarization/Results/summarization_1000_labeled_tigerllm.csv",
         tok, mod, resume,
     ),
     "reasoning": lambda tok, mod, resume: run_reasoning(
-        "Reasoning/1000_hallucinated Samples/somadhan_1000_hallucinated.csv",
+        "Hallucination Generated Answers/reasoning_1000.csv",
         "Reasoning/Results/reasoning_evaluation_scored_tigerllm.csv",
         tok, mod, resume, is_groundtruth=False,
     ),

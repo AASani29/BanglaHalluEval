@@ -9,8 +9,8 @@ Writes a new CSV with an added column `is_hallucinated` with values: yes / no / 
 
 Usage (examples):
   python scripts/label_hallucinations_ollama.py \
-    --input Results/hallucinated_answers_generation_qa.csv \
-    --output Results/hallucinated_answers_generation_qa_with_labels.csv \
+    --input "Hallucination Generated Answers/qa_4000.csv" \
+    --output QA/Results/hallucinated_answers_generation_qa_with_labels.csv \
     --model qwen-2.5-32b --start 0 --end 400 --dry-run
 
 This script is defensive: it retries calls, enforces the model to reply with a single token

@@ -88,7 +88,7 @@ def build_reasoning_cot(r): return REASONING_COT_PROMPT.format(question=r["quest
 
 
 TASKS = {
-    "gqa_gt":       {"in": "BenHalluEval Ground Truth Datasets/benhallueval_qa_gt_1000.csv",
+    "gqa_gt":       {"in": "BanglaHalluEval Datasets/banglahallueval_qa_1000.csv",
                      "out": f"scripts/results_{SLUG}_cot/gqa_gt_cot.csv",
                      "candidate": "correct_answer",
                      "prompt": build_qa_cot},
@@ -97,18 +97,18 @@ TASKS = {
                      "candidate": "hallucinated_answer",
                      "prompt": build_qa_cot},
 
-    "summ_gt":      {"in": "BenHalluEval Ground Truth Datasets/benhallueval_summarization_gt_1000.csv",
+    "summ_gt":      {"in": "Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv",
                      "out": f"scripts/results_{SLUG}_cot/summ_gt_cot.csv",
                      "candidate": "summary",
                      "doc":       "question",
                      "prompt": build_summ_cot},
-    "summ_hallu":   {"in": "Hallucination Generated Answers/summarization_3000.csv",
+    "summ_hallu":   {"in": "Hallucination Generated Answers/summarization_3000_corrected.csv",
                      "out": f"scripts/results_{SLUG}_cot/summ_hallu_cot.csv",
                      "candidate": "hallucinated_summary",
                      "doc":       "document",
                      "prompt": build_summ_cot},
 
-    "reason_gt":    {"in": "BenHalluEval Ground Truth Datasets/benhallueval_reasoning_gt_1000.csv",
+    "reason_gt":    {"in": "Reasoning/1000 Selected Samples/somadhan_1000_main_ordered.csv",
                      "out": f"scripts/results_{SLUG}_cot/reason_gt_cot.csv",
                      "candidate": "answer",
                      "prompt": build_reasoning_cot},

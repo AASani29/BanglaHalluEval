@@ -7,7 +7,7 @@ Writes a new CSV with an added column `is_hallucinated`.
 Usage:
     python scripts/label_summarization_deepseek.py \
         --input "Hallucination Generated Answers/summarization_3000_corrected.csv" \
-        --output "Summarization/Evaluation_Results/summarization_3000_corrected_labeled_deepseek_r1_14b.csv" \
+        --output "Summarization/Results/summarization_3000_corrected_labeled_deepseek_r1_14b.csv" \
         --resume
 """
 
@@ -100,7 +100,7 @@ def main() -> None:
     p.add_argument("--input", required=True, help="Input CSV path")
     p.add_argument(
         "--output",
-        default="Summarization/Evaluation_Results/summarization_3000_corrected_labeled_deepseek_r1_14b.csv",
+        default="Summarization/Results/summarization_3000_corrected_labeled_deepseek_r1_14b.csv",
         help="Output CSV path",
     )
     p.add_argument("--model", default="deepseek-r1:14b", help="Ollama model name")

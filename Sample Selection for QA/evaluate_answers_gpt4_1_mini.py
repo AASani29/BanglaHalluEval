@@ -2,7 +2,7 @@
 
 Mirrors evaluate_answers.py exactly (same merge logic, same scoring prompt),
 but:
-  - Uses the 1000-item ground-truth set (QA/qa_gt_1000.csv) instead of
+  - Uses the 1000-item ground-truth set (BanglaHalluEval Datasets/banglahallueval_qa_1000.csv) instead of
     Datasets/tydiqa_goldp_bengali.csv.
   - Judges a reproducible 500-item random sample (seed=42) of the
     deepseek/gemma/qwen intersection, instead of the full set.

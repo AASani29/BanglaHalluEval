@@ -2,7 +2,7 @@
 """Evaluate hallucinations using deepseek-r1:14b via Ollama.
 
 Tasks:
-  summ_hallu   → Summarization/Evaluation_Results/summ_3000_deepseek_hallu.csv
+  summ_hallu   → Summarization/Results/summ_3000_deepseek_hallu.csv
   reason_hallu → Reasoning/Results/reasoning_evaluation_scored_deepseek.csv
   reason_gt    → Reasoning/Results/reasoning_evaluation_scored_groundtruth_deepseek.csv
 
@@ -188,7 +188,7 @@ def extract_label(raw: str, json_mode: bool = False) -> str:
 
 def run_summ_hallu(base_url: str) -> None:
     input_file = "Hallucination Generated Answers/summarization_3000_corrected.csv"
-    output_file = "Summarization/Evaluation_Results/summ_3000_deepseek_hallu.csv"
+    output_file = "Summarization/Results/summ_3000_deepseek_hallu.csv"
     Path(output_file).parent.mkdir(parents=True, exist_ok=True)
 
     with open(input_file, newline="", encoding="utf-8", errors="replace") as f:
@@ -286,7 +286,7 @@ def run_reasoning(input_file: str, output_file: str, is_groundtruth: bool, base_
 TASKS = {
     "summ_hallu": lambda url: run_summ_hallu(url),
     "reason_hallu": lambda url: run_reasoning(
-        "Reasoning/1000_hallucinated Samples/somadhan_1000_hallucinated.csv",
+        "Hallucination Generated Answers/reasoning_1000.csv",
         "Reasoning/Results/reasoning_evaluation_scored_deepseek.csv",
         is_groundtruth=False,
         base_url=url,

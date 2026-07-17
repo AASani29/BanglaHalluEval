@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Evaluate reasoning hallucinations using mistral-nemo and llama3.1:8b via Ollama.
 
-Reads: Reasoning/1000_hallucinated Samples/somadhan_1000_hallucinated.csv
+Reads: Hallucination Generated Answers/reasoning_1000.csv
 Saves separate result files per model to: Reasoning/Results/
 
 Usage:
@@ -17,7 +17,7 @@ import os
 import argparse
 from tqdm import tqdm
 
-INPUT_FILE = "Reasoning/1000_hallucinated Samples/somadhan_1000_hallucinated.csv"
+INPUT_FILE = "Hallucination Generated Answers/reasoning_1000.csv"
 RESULTS_DIR = "Reasoning/Results"
 
 MODELS = [

@@ -45,7 +45,7 @@ TASKS = {
     "qa": {
         "prompt_file": "ecot_qa.txt",
         "A": {
-            "input":     ROOT / "BenHalluEval Ground Truth Datasets" / "benhallueval_qa_gt_1000.csv",
+            "input":     ROOT / "BanglaHalluEval Datasets" / "banglahallueval_qa_1000.csv",
             "evidence_col":  "context",
             "candidate_col": "correct_answer",
             "id_col":        "id",
@@ -60,13 +60,13 @@ TASKS = {
     "summarization": {
         "prompt_file": "ecot_summarization.txt",
         "A": {
-            "input":     ROOT / "BenHalluEval Ground Truth Datasets" / "benhallueval_summarization_gt_1000.csv",
+            "input":     ROOT / "Summarization" / "1000 Selected Samples" / "banglahallueval_summarization_dataset_1000.csv",
             "evidence_col":  "question",
             "candidate_col": "summary",
             "id_col":        "id",
         },
         "B": {
-            "input":     ROOT / "Hallucination Generated Answers" / "summarization_3000.csv",
+            "input":     ROOT / "Hallucination Generated Answers" / "summarization_3000_corrected.csv",
             "evidence_col":  "document",
             "candidate_col": "hallucinated_summary",
             "id_col":        "id",
@@ -75,7 +75,7 @@ TASKS = {
     "reasoning": {
         "prompt_file": "ecot_reasoning.txt",
         "A": {
-            "input":     ROOT / "BenHalluEval Ground Truth Datasets" / "benhallueval_reasoning_gt_1000.csv",
+            "input":     ROOT / "Reasoning" / "1000 Selected Samples" / "somadhan_1000_main_ordered.csv",
             "evidence_col":  "answer",     # gold CoT
             "candidate_col": "answer",     # candidate equals reference on Track A
             "id_col":        "question",   # GT file has no id; join on question text

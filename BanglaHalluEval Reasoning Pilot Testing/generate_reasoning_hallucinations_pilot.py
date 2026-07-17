@@ -117,7 +117,7 @@ def request_hallucination(
 def main() -> None:
 	root = Path(__file__).resolve().parent
 	repo_root = root.parent
-	default_input = repo_root / "SOMADHAN_SORTED.csv"
+	default_input = repo_root / "Reasoning" / "SOMADHAN Source Dataset" / "SOMADHAN_SORTED.csv"
 	input_csv = Path(os.getenv("REASONING_INPUT_CSV", str(default_input)))
 
 	output_subset = root / "reasoning_pilot_12.csv"

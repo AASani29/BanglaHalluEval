@@ -5,8 +5,8 @@ Runs both tracks (gt from codemix_1000, hallu from codemix_4000) on the
 deterministic 10% subsets produced by sample_codemix_10pct.py.
 
 Outputs (resumable, incremental writes):
-    Evaluations/10pct_codemix_cot/codemix_cot_gt_<slug>.csv
-    Evaluations/10pct_codemix_cot/codemix_cot_hallu_<slug>.csv
+    10pct Sampled Evaluations/10pct_codemix_cot/codemix_cot_gt_<slug>.csv
+    10pct Sampled Evaluations/10pct_codemix_cot/codemix_cot_hallu_<slug>.csv
 
 Usage examples:
     python scripts/eval_codemix_cot.py --model llama3_1_8b
@@ -37,7 +37,7 @@ except Exception:
 
 ROOT = Path(__file__).resolve().parent.parent
 SAMPLE_DIR = ROOT / "Sampling" / "10pct_codemix"
-OUT_DIR    = ROOT / "Evaluations" / "10pct_codemix_cot"
+OUT_DIR    = ROOT / "10pct Sampled Evaluations" / "10pct_codemix_cot"
 
 MODELS: Dict[str, dict] = {
     # Ollama-served (5)

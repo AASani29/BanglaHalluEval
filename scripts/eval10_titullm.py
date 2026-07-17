@@ -44,8 +44,8 @@ from eval10_common import (
 MODEL_ID = "hishab/titulm-llama-3.2-3b-v1.1"
 BATCH_SIZE = 8
 COT_MAX_NEW = 400
-OUT_BASE = ROOT / "Evaluations" / "10pct_baseline_titullm"
-OUT_COT  = ROOT / "Evaluations" / "10pct_cot_titullm"
+OUT_BASE = ROOT / "10pct Sampled Evaluations" / "10pct_baseline_titullm"
+OUT_COT  = ROOT / "10pct Sampled Evaluations" / "10pct_cot_titullm"
 
 
 def load_model():

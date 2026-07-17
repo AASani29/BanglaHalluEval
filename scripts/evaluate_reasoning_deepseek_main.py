@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Evaluate main ground truth reasoning dataset using deepseek-r1:14b via Ollama.
 
-Input:  Reasoning/1000_main_dataset/somadhan_1000_main.csv
+Input:  Reasoning/1000 Selected Samples/somadhan_1000_main_ordered.csv
 Output: Reasoning/Results/reasoning_main_1000_deepseek.csv
 
 Usage:
@@ -15,7 +15,7 @@ import os
 import re
 from tqdm import tqdm
 
-INPUT_FILE  = "Reasoning/1000_main_dataset/somadhan_1000_main.csv"
+INPUT_FILE  = "Reasoning/1000 Selected Samples/somadhan_1000_main_ordered.csv"
 OUTPUT_FILE = "Reasoning/Results/reasoning_main_1000_deepseek.csv"
 MODEL       = "deepseek-r1:14b"
 OLLAMA_URL  = "http://localhost:11434/api/generate"

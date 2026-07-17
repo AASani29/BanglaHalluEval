@@ -7,8 +7,8 @@ This mirrors evaluate_cot_tigerllm.py, but uses BanglaLLama and defaults to a
 Tasks (default: all):
   qa_hallu     → QA/Results/qa_cot_hallu_banglallama.csv
   qa_gt        → QA/Results/qa_cot_gt_banglallama.csv
-  summ_hallu   → Summarization/Evaluation_Results/summ_3000_cot_banglallama.csv
-  summ_gt      → Summarization/Evaluation_Results/summ_1000_cot_banglallama.csv
+  summ_hallu   → Summarization/Results/summ_3000_cot_banglallama.csv
+  summ_gt      → Summarization/Results/summ_1000_cot_banglallama.csv
   reason_hallu → Reasoning/Results/reasoning_cot_banglallama.csv
   reason_gt    → Reasoning/Results/reasoning_gt_cot_banglallama.csv
 
@@ -194,7 +194,7 @@ def get_tasks(llm) -> dict:
             parse_summ_label, llm,
         ),
         "qa_gt": lambda: run_csv_task(
-            "QA/qa_gt_1000.csv",
+            "BanglaHalluEval Datasets/banglahallueval_qa_1000.csv",
             f"QA/Results/qa_cot_gt_{SLUG}.csv",
             lambda r: QA_COT_PROMPT.format(
                 question=r.get("question", ""),
@@ -204,7 +204,7 @@ def get_tasks(llm) -> dict:
         ),
         "summ_hallu": lambda: run_csv_task(
             "Hallucination Generated Answers/summarization_3000_corrected.csv",
-            f"Summarization/Evaluation_Results/summ_3000_cot_{SLUG}.csv",
+            f"Summarization/Results/summ_3000_cot_{SLUG}.csv",
             lambda r: SUMM_COT_PROMPT.format(
                 document=r.get("document", "") or r.get("question", ""),
                 summary=r.get("hallucinated_summary", "") or r.get("summary", ""),
@@ -213,7 +213,7 @@ def get_tasks(llm) -> dict:
         ),
         "summ_gt": lambda: run_csv_task(
             "Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv",
-            f"Summarization/Evaluation_Results/summ_1000_cot_{SLUG}.csv",
+            f"Summarization/Results/summ_1000_cot_{SLUG}.csv",
             lambda r: SUMM_COT_PROMPT.format(
                 document=r.get("question", ""),
                 summary=r.get("summary", ""),
@@ -221,7 +221,7 @@ def get_tasks(llm) -> dict:
             parse_summ_label, llm,
         ),
         "reason_hallu": lambda: run_reasoning_task(
-            "Reasoning/1000_hallucinated Samples/somadhan_1000_hallucinated.csv",
+            "Hallucination Generated Answers/reasoning_1000.csv",
             f"Reasoning/Results/reasoning_cot_{SLUG}.csv",
             is_groundtruth=False, llm=llm,
         ),

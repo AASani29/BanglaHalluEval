@@ -7,7 +7,7 @@ Writes a new CSV with an added column `is_hallucinated`.
 Usage:
     python Codemix/label_codemix_main_mistral_ollama.py \
         --input "Codemix/Main dataset/codemix_1000.csv" \
-        --output "Results/codemix_1000_main_mistral_labeled.csv" \
+        --output "Codemix/Results/codemix_1000_main_mistral_labeled.csv" \
         --ollama-url https://YOUR-POD-ID-11434.proxy.runpod.net
 """
 

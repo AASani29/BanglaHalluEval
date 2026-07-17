@@ -4,8 +4,8 @@
 Tasks:
   qa_hallu     → QA/Results/qa_4000_tigerllm_hallu.csv
   qa_gt        → QA/Results/qa_4000_tigerllm_gt.csv
-  summ_hallu   → Summarization/Evaluation_Results/summ_3000_tigerllm_hallu.csv
-  summ_gt      → Summarization/Evaluation_Results/summ_1000_tigerllm_gt.csv
+  summ_hallu   → Summarization/Results/summ_3000_tigerllm_hallu.csv
+  summ_gt      → Summarization/Results/summ_1000_tigerllm_gt.csv
   reason_hallu → Reasoning/Results/reasoning_tigerllm_hallu.csv
   reason_gt    → Reasoning/Results/reasoning_tigerllm_gt.csv
 
@@ -287,7 +287,7 @@ def get_tasks(args):
         ),
         "summ_hallu": lambda tok, mod: run_csv_task(
             "Hallucination Generated Answers/summarization_3000_corrected.csv",
-            "Summarization/Evaluation_Results/summ_3000_tigerllm_hallu.csv",
+            "Summarization/Results/summ_3000_tigerllm_hallu.csv",
             lambda r: SUMM_PROMPT.format(
                 document=r.get("document","") or r.get("question",""),
                 summary=r.get("hallucinated_summary","") or r.get("summary",""),
@@ -296,7 +296,7 @@ def get_tasks(args):
         ),
         "summ_gt": lambda tok, mod: run_csv_task(
             "Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv",
-            "Summarization/Evaluation_Results/summ_1000_tigerllm_gt.csv",
+            "Summarization/Results/summ_1000_tigerllm_gt.csv",
             lambda r: SUMM_PROMPT.format(
                 document=r.get("question",""),
                 summary=r.get("summary",""),
@@ -304,7 +304,7 @@ def get_tasks(args):
             parse_yesno, tok, mod, resume=True,
         ),
         "reason_hallu": lambda tok, mod: run_reasoning_task(
-            "Reasoning/1000_hallucinated Samples/somadhan_1000_hallucinated.csv",
+            "Hallucination Generated Answers/reasoning_1000.csv",
             "Reasoning/Results/reasoning_tigerllm_hallu.csv",
             is_groundtruth=False, tokenizer=tok, model=mod, resume=True,
         ),

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Sample 50 rows from each BenHalluEval task for the E-CoT pilot.
 
-Track A = ground-truth correct candidates (`BenHalluEval Ground Truth Datasets/`)
+Track A = ground-truth correct candidates (per-task canonical dataset locations)
 Track B = hallucinated candidates           (`Hallucination Generated Answers/`)
 
 Reproducible via random_state=42. Writes to pilot_50_samples/data/.
@@ -18,21 +18,19 @@ SEED = 42
 N = 50
 
 SOURCES = {
-    "A": {  # ground-truth pilot (expected verdict = "no")
-        "dir": ROOT / "BenHalluEval Ground Truth Datasets",
-        "files": {
-            "qa":            "benhallueval_qa_gt_1000.csv",
-            "summarization": "benhallueval_summarization_gt_1000.csv",
-            "reasoning":     "benhallueval_reasoning_gt_1000.csv",
+    "A": {  # ground-truth pilot (expected verdict = "no") -- canonical per-task locations
+        "paths": {
+            "qa":            ROOT / "BanglaHalluEval Datasets" / "banglahallueval_qa_1000.csv",
+            "summarization": ROOT / "Summarization" / "1000 Selected Samples" / "banglahallueval_summarization_dataset_1000.csv",
+            "reasoning":     ROOT / "Reasoning" / "1000 Selected Samples" / "somadhan_1000_main_ordered.csv",
         },
         "suffix": "gt",
     },
     "B": {  # hallucinated pilot (expected verdict = "yes")
-        "dir": ROOT / "Hallucination Generated Answers",
-        "files": {
-            "qa":            "qa_4000.csv",
-            "summarization": "summarization_3000.csv",
-            "reasoning":     "reasoning_1000.csv",
+        "paths": {
+            "qa":            ROOT / "Hallucination Generated Answers" / "qa_4000.csv",
+            "summarization": ROOT / "Hallucination Generated Answers" / "summarization_3000_corrected.csv",
+            "reasoning":     ROOT / "Hallucination Generated Answers" / "reasoning_1000.csv",
         },
         "suffix": "hallu",
     },
@@ -42,8 +40,7 @@ SOURCES = {
 def sample_track(track: str) -> None:
     cfg = SOURCES[track]
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    for task, fname in cfg["files"].items():
-        src = cfg["dir"] / fname
+    for task, src in cfg["paths"].items():
         df = pd.read_csv(src, on_bad_lines="skip")
         sampled = df.sample(n=N, random_state=SEED).reset_index(drop=True)
         out = OUT_DIR / f"{task}_{cfg['suffix']}_{N}.csv"

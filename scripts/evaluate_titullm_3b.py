@@ -106,7 +106,7 @@ def build_codemix_prompt(r):   return CODEMIX_PROMPT.format(context=r["codemix_c
 
 
 TASKS = {
-    "gqa_gt":       {"in": "BenHalluEval Ground Truth Datasets/benhallueval_qa_gt_1000.csv",
+    "gqa_gt":       {"in": "BanglaHalluEval Datasets/banglahallueval_qa_1000.csv",
                      "out": f"scripts/results_{SLUG}/gqa_gt_labeled.csv",
                      "candidate": "correct_answer",
                      "prompt": build_qa_prompt},
@@ -115,18 +115,18 @@ TASKS = {
                      "candidate": "hallucinated_answer",
                      "prompt": build_qa_prompt},
 
-    "summ_gt":      {"in": "BenHalluEval Ground Truth Datasets/benhallueval_summarization_gt_1000.csv",
+    "summ_gt":      {"in": "Summarization/1000 Selected Samples/banglahallueval_summarization_dataset_1000.csv",
                      "out": f"scripts/results_{SLUG}/summ_gt_labeled.csv",
                      "candidate": "summary",
                      "doc":       "question",         # source query IS the document for summ_gt
                      "prompt": build_summ_prompt},
-    "summ_hallu":   {"in": "Hallucination Generated Answers/summarization_3000.csv",
+    "summ_hallu":   {"in": "Hallucination Generated Answers/summarization_3000_corrected.csv",
                      "out": f"scripts/results_{SLUG}/summ_hallu_labeled.csv",
                      "candidate": "hallucinated_summary",
                      "doc":       "document",
                      "prompt": build_summ_prompt},
 
-    "reason_gt":    {"in": "BenHalluEval Ground Truth Datasets/benhallueval_reasoning_gt_1000.csv",
+    "reason_gt":    {"in": "Reasoning/1000 Selected Samples/somadhan_1000_main_ordered.csv",
                      "out": f"scripts/results_{SLUG}/reason_gt_labeled.csv",
                      "candidate": "answer",
                      "prompt": build_reasoning_prompt},
@@ -135,7 +135,7 @@ TASKS = {
                      "candidate": "hallucinated_chain",
                      "prompt": build_reasoning_prompt},
 
-    "codemix_gt":   {"in": "BenHalluEval Ground Truth Datasets/benhallueval_codemix_gt_1000.csv",
+    "codemix_gt":   {"in": "Codemix/Main dataset/codemix_1000.csv",
                      "out": f"scripts/results_{SLUG}/codemix_gt_labeled.csv",
                      "candidate": "codemix_answer",
                      "prompt": build_codemix_prompt},
