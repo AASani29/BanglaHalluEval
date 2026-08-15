@@ -29,18 +29,18 @@ except ImportError:
 
 def make_call_fn(model: str = "gpt-4.1-mini",
                  max_output_tokens: int = 2000,
-                 temperature: float = 0.0) -> Callable[[str, str], str]:
+                 temperature: float = 0.0,
+                 timeout: float = 120.0) -> Callable[[str, str], str]:
     repo_root = Path(__file__).resolve().parent.parent.parent
     if load_dotenv is not None:
         load_dotenv(repo_root / ".env")
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise SystemExit("OPENAI_API_KEY not in environment / .env")
-    client = OpenAI(api_key=api_key)
+    client = OpenAI(api_key=api_key, timeout=timeout)
 
     def call(prompt: str, task: str) -> str:
-        # 3 retries on transient errors; SDK already handles many internally.
-        for attempt in range(3):
+        for attempt in range(5):
             try:
                 resp = client.chat.completions.create(
                     model=model,
@@ -51,10 +51,13 @@ def make_call_fn(model: str = "gpt-4.1-mini",
                 )
                 return resp.choices[0].message.content or ""
             except Exception as exc:
-                if attempt == 2:
-                    print(f"  [!] OpenAI error after 3 retries: {exc}", file=sys.stderr)
+                wait = min(2 ** attempt, 60)
+                if attempt == 4:
+                    print(f"  [!] OpenAI error after 5 retries: {exc}", file=sys.stderr)
                     return ""
-                time.sleep(2 ** attempt)
+                print(f"  [!] OpenAI error (attempt {attempt+1}/5, retry in {wait}s): {exc}",
+                      file=sys.stderr)
+                time.sleep(wait)
         return ""
 
     return call

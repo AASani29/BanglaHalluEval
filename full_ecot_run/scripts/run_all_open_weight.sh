@@ -22,17 +22,35 @@ cd "$(dirname "$0")/../.."   # repo root
 LOG_DIR="full_ecot_run/results/_logs"
 mkdir -p "$LOG_DIR"
 
-# Order chosen to keep GPU footprint manageable: smallest first.
-JUDGES=(
-  "mistral_nemo"
+# Ollama judges (smallest/fastest first)
+OLLAMA_JUDGES=(
   "llama3_1_8b"
   "deepseek_r1_14b"
   "gemma2_27b"
   "qwen2_5_32b"
-  "tigerllm_9b"     # HuggingFace; needs dedicated GPU — run AFTER Ollama is stopped
 )
 
-for slug in "${JUDGES[@]}"; do
+# HuggingFace judges (need GPU free of Ollama)
+HF_JUDGES=(
+  "bangla_llama_13b"
+  "tigerllm_9b"
+)
+
+for slug in "${OLLAMA_JUDGES[@]}"; do
+  ts=$(date +%Y%m%d_%H%M%S)
+  log="$LOG_DIR/${slug}_${ts}.log"
+  echo "[$(date)] starting $slug -> $log"
+  python -u "full_ecot_run/scripts/02_run_${slug}.py" --task all --track both 2>&1 | tee "$log"
+  echo "[$(date)] finished $slug"
+done
+
+# Stop Ollama before loading HuggingFace models into GPU
+echo "[$(date)] Stopping Ollama to free GPU VRAM for HuggingFace models..."
+pkill -f "ollama serve" 2>/dev/null || true
+sleep 5
+nvidia-smi --query-gpu=memory.used --format=noheader,nounits 2>/dev/null || true
+
+for slug in "${HF_JUDGES[@]}"; do
   ts=$(date +%Y%m%d_%H%M%S)
   log="$LOG_DIR/${slug}_${ts}.log"
   echo "[$(date)] starting $slug -> $log"
