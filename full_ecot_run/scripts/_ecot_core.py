@@ -35,8 +35,8 @@ PROMPTS_DIR = RUN_DIR / "prompts"
 RESULTS_DIR = RUN_DIR / "results"
 
 # ── Policy constants (frozen by pilot) ──────────────────────────────────────
-MISSING_THRESHOLD = {"qa": 0.30, "summarization": 0.30, "reasoning": 0.30}
-VERDICT_SOURCE    = {"qa": "agg", "summarization": "model", "reasoning": "agg"}
+MISSING_THRESHOLD = {"qa": 0.30, "summarization": 0.30, "reasoning": 0.30, "codemix": 0.30}
+VERDICT_SOURCE    = {"qa": "agg", "summarization": "model", "reasoning": "agg", "codemix": "agg"}
 
 # ── Task / track / input file registry ──────────────────────────────────────
 # Each entry: input CSV, prompt template, evidence + candidate field names,
@@ -87,6 +87,25 @@ TASKS = {
             "id_col":        "id",
         },
     },
+    # Code-mixed QA runs on the 10% subsets built by scripts/sample_codemix_10pct.py
+    # (100 GT rows / 400 hallucinated rows), not the full 4000-row set.
+    "codemix": {
+        "prompt_file": "ecot_codemix.txt",
+        "A": {
+            "input":     ROOT / "Sampling" / "10pct_codemix" / "gt.csv",
+            "evidence_col":  "codemix_context",
+            "question_col":  "codemix_question",
+            "candidate_col": "codemix_answer",
+            "id_col":        "id",
+        },
+        "B": {
+            "input":     ROOT / "Sampling" / "10pct_codemix" / "hallu.csv",
+            "evidence_col":  "codemix_context",
+            "question_col":  "codemix_question",
+            "candidate_col": "hallucinated_answer",
+            "id_col":        "id",
+        },
+    },
 }
 
 OUTPUT_FIELDS = [
@@ -107,10 +126,10 @@ def build_prompt(task: str, track: str, row: pd.Series, template: str) -> str:
     cfg = TASKS[task][track]
     evidence  = str(row[cfg["evidence_col"]]).strip()
     candidate = str(row[cfg["candidate_col"]]).strip()
-    if task == "qa":
+    if task in ("qa", "codemix"):
         return template.format(
             context=evidence,
-            question=str(row["question"]).strip(),
+            question=str(row[cfg.get("question_col", "question")]).strip(),
             candidate=candidate,
         )
     if task == "summarization":
@@ -339,7 +358,7 @@ def run_one(model: ModelConfig, task: str, track: str,
 
 
 def run_all(model: ModelConfig,
-            tasks: Iterable[str] = ("qa", "summarization", "reasoning"),
+            tasks: Iterable[str] = ("qa", "summarization", "reasoning", "codemix"),
             tracks: Iterable[str] = ("A", "B"),
             resume: bool = True) -> None:
     for task in tasks:

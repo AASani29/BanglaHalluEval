@@ -1,0 +1,29 @@
+judge,judge_display,task,n_A,n_B,ecot_a_err,ecot_b_err,ecot_bhs
+tigerllm_9b,TigerLLM-9B (nf4),qa,1000,4000,7.1,21.05,14.07
+tigerllm_9b,TigerLLM-9B (nf4),summarization,1000,3000,1.6,55.17,28.39
+tigerllm_9b,TigerLLM-9B (nf4),reasoning,1000,1000,1.4,7.2,4.3
+tigerllm_9b,TigerLLM-9B (nf4),OVERALL,,,,,15.59
+qwen2_5_32b,Qwen2.5-32B-Instruct,qa,1000,3992,7.5,10.57,9.04
+qwen2_5_32b,Qwen2.5-32B-Instruct,summarization,1000,3000,9.2,16.1,12.65
+qwen2_5_32b,Qwen2.5-32B-Instruct,reasoning,1000,1000,3.7,1.8,2.75
+qwen2_5_32b,Qwen2.5-32B-Instruct,OVERALL,,,,,8.15
+deepseek_r1_14b,DeepSeek-R1-14B,qa,1000,4000,3.8,42.45,23.12
+deepseek_r1_14b,DeepSeek-R1-14B,summarization,1000,3000,3.7,55.97,29.84
+deepseek_r1_14b,DeepSeek-R1-14B,reasoning,1000,1000,7.2,20.1,13.65
+deepseek_r1_14b,DeepSeek-R1-14B,OVERALL,,,,,22.2
+gemma2_27b,Gemma2-27B,qa,1000,4000,3.2,17.7,10.45
+gemma2_27b,Gemma2-27B,summarization,1000,3000,2.8,47.93,25.36
+gemma2_27b,Gemma2-27B,reasoning,1000,1000,3.0,3.7,3.35
+gemma2_27b,Gemma2-27B,OVERALL,,,,,13.05
+llama3_1_8b,Llama3.1-8B,qa,1000,4000,27.8,16.43,22.12
+llama3_1_8b,Llama3.1-8B,summarization,1000,3000,0.6,93.9,47.25
+llama3_1_8b,Llama3.1-8B,reasoning,1000,1000,1.2,31.9,16.55
+llama3_1_8b,Llama3.1-8B,OVERALL,,,,,28.64
+mistral_nemo,Mistral-Nemo-12B,qa,1000,4000,36.0,10.45,23.23
+mistral_nemo,Mistral-Nemo-12B,summarization,1000,3000,0.3,95.43,47.87
+mistral_nemo,Mistral-Nemo-12B,reasoning,1000,1000,44.3,3.8,24.05
+mistral_nemo,Mistral-Nemo-12B,OVERALL,,,,,31.72
+gpt4_1_mini,GPT-4.1-mini,qa,1000,4000,15.1,9.05,12.07
+gpt4_1_mini,GPT-4.1-mini,summarization,1000,3000,4.3,26.57,15.44
+gpt4_1_mini,GPT-4.1-mini,reasoning,1000,1000,2.9,1.6,2.25
+gpt4_1_mini,GPT-4.1-mini,OVERALL,,,,,9.92
